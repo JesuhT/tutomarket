@@ -1,0 +1,10 @@
+php_flag output_buffering on
+# RewriteEngine On
+Options All -Indexes
+
+# Rewrite URLs to index.php
+# RewriteRule ^([a-zA-Z0-9/ñÑ-]+)$ index.php?views=$1 [QSA,L]
+
+# Add SVG types
+AddType image/svg+xml svg
+AddType image/svg+xml svgz
