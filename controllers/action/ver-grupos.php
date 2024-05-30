@@ -1,5 +1,5 @@
 <?php
     session_start();
     require_once(__DIR__ . "/../mdb/mdbAlmuerzo.php");
-    $almuerzos = leerAlmuerzos();
+    $almuerzos = leerGrupos();
     echo json_encode($almuerzos);

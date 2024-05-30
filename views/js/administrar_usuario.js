@@ -93,7 +93,7 @@ function insertarUsuariosEnTabla(result) {
       + '<td class="data-list" width="250" style="border: 1px solid #dddddd; text-align: left;padding: 8px;">' + biografiaTruncada + '</td>'
       + '<td class="data-list" width="150" class="text-center" style="border: 1px solid #dddddd; text-align: left; padding: 8px;">'
       + '<div class="btn-container">'
-      + '<a class="editar btn btn-sm" data-id="' + result[i].Id_Persona + '" style="background-color: #007BFF; color: #fff;" role="button" aria-pressed="true">'
+      + '<a class="editar btn btn-sm" data-id="' + result[i].Id_Persona + '" style="background-color: rgb(142, 68, 173); color: #fff;" role="button" aria-pressed="true">'
       + '<i class="fas fa-edit"></i> Editar</a>'
       + '</div>'
       + '<div class="btn-container">'

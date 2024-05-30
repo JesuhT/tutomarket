@@ -12,9 +12,9 @@ function obtenerAlmuerzosUsuario($usuario,$dia) {
     return $tienealmuerzo;
 }
 
-function leerAlmuerzos() {
+function leerGrupos() {
     $dao = new AlmuerzoDAO();
-    $almuerzos = $dao->leerAlmuerzos();
+    $almuerzos = $dao->leerGrupos();
     return $almuerzos;
 }
 
@@ -24,9 +24,9 @@ function modificarAlmuerzo($almuerzo) {
     return $resultado;
 }
 
-function buscarAlmuerzoPorId($id) {
+function buscarGrupoPorId($id) {
     $dao = new AlmuerzoDAO();
-    $resultado = $dao->buscarAlmuerzoPorId($id);
+    $resultado = $dao->buscarGrupoPorId($id);
     return $resultado;
 }
 

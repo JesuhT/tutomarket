@@ -9,7 +9,7 @@
 
 :root {
   /* ===== Colors ===== */
-  --primary-color: #0e4bf1;
+  --primary-color: rgb(142, 68, 173);
   --panel-color: #fff;
   --text-color: #000;
   --black-light-color: #707070;
@@ -45,7 +45,7 @@ body {
   text-decoration: none;
 }
 body.dark {
-  --primary-color: #3a3b3c;
+  --primary-color: rgb(142, 68, 173);
   --panel-color: #242526;
   --text-color: #ccc;
   --font-white: #000;
@@ -73,7 +73,7 @@ body.dark {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #0b3cc1;
+  background: rgb(142, 68, 173);
 }
 
 body.dark::-webkit-scrollbar-thumb:hover,
@@ -738,8 +738,12 @@ input[type="search"]{
   text-overflow: ellipsis;
 }
 
+.btn-pur {
+  background-color: rgb(142, 68, 173);
+}
+
 /* Estilo personalizado para el campo de entrada de descripción */
-#modalEditarAlmuerzo input[name="descripcion"] {
+#modalEditarGrupo input[name="descripcion"] {
   writing-mode: initial !important;  /* Anula la propiedad writing-mode */
   max-height: none;  /* Ajusta la altura máxima según sea necesario */
   overflow: visible;  /* Ajusta el comportamiento de desbordamiento */

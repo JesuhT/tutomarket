@@ -1,6 +1,7 @@
 <?php
 require_once("datasource.php");
-require_once(__DIR__ . "/../entities/Almuerzo.php");
+require_once(__DIR__ . '/../../models/entities/Grupo_Monitoria.php');
+
 
 class AlmuerzoDAO
 {
@@ -15,7 +16,8 @@ class AlmuerzoDAO
         INNER JOIN Menu me ON me.ID_menu = am.ID_menu 
         INNER JOIN Dia_almuerzo d ON me.ID_dia = d.ID_dia 
         WHERE d.nombre = :dia
-        GROUP BY al.ID_almuerzo, al.nombre, al.descripcion;", array(':dia' => $dia)
+        GROUP BY al.ID_almuerzo, al.nombre, al.descripcion;",
+            array(':dia' => $dia)
         );
         $almuerzos = array();
 
@@ -32,7 +34,7 @@ class AlmuerzoDAO
 
         foreach ($almuerzos as $almuerzo) {
             $almuerzoArray = array(
-                'ID_almuerzo'=> $almuerzo->getID_almuerzo(),
+                'ID_almuerzo' => $almuerzo->getID_almuerzo(),
                 'nombre' => $almuerzo->getNombre(),
                 'descripcion' => $almuerzo->getDescripcion(),
                 'promedioCalificacion' => $almuerzo->getPromedioCalificacion()
@@ -59,36 +61,43 @@ class AlmuerzoDAO
             return false; // El estudiante no tiene almuerzo para el día específico
         }
     }
-    public function leerAlmuerzos()
+
+    function leerGrupos()
     {
         $data_source = new DataSource();
-        $data_table = $data_source->ejecutarConsulta("SELECT * FROM Almuerzo",NULL);
-        $almuerzos = array();
+        $data_table = $data_source->ejecutarConsulta("SELECT * FROM Grupo_Monitoria", NULL);
+        $grupos = array();
+
         if (!$data_table) {
             return array();
         }
+
         foreach ($data_table as $indice => $valor) {
-            $almuerzo = new Almuerzo(
-                $data_table[$indice]["ID_almuerzo"],
-                $data_table[$indice]["nombre"],
-                $data_table[$indice]["descripcion"]
+            $grupo = new Grupo_Monitoria(
+                $data_table[$indice]["Id_Monitoria"],
+                $data_table[$indice]["Id_Monitor"],
+                $data_table[$indice]["Materia"],
+                $data_table[$indice]["Fecha"]
             );
-            array_push($almuerzos, $almuerzo);
+            array_push($grupos, $grupo);
         }
-        $almuerzosArray = array();
 
-        foreach ($almuerzos as $almuerzo) {
-            $almuerzoArray = array(
+        $gruposArray = array();
 
-                'ID_almuerzo' => $almuerzo->getID_almuerzo(),
-                'nombre' => $almuerzo->getNombre(),
-                'descripcion' => $almuerzo->getDescripcion(),
+        foreach ($grupos as $grupo) {
+            $grupoArray = array(
+                'Id_Monitoria' => $grupo->getId_Monitoria(),
+                'Id_Monitor' => $grupo->getId_Monitor(),
+                'Materia' => $grupo->getMateria(),
+                'Fecha' => $grupo->getFecha()
             );
 
-            $almuerzosArray[] = $almuerzoArray;
+            $gruposArray[] = $grupoArray;
         }
-        return $almuerzosArray;
+        return $gruposArray;
     }
+
+
     public function modificarAlmuerzo(Almuerzo $almuerzo)
     {
         $data_source = new DataSource();
@@ -103,24 +112,27 @@ class AlmuerzoDAO
         );
         return $resultado;
     }
-    public function buscarAlmuerzoPorId($ID_almuerzo){
+    public function buscarGrupoPorId($Id_Monitoria)
+    {
         $data_source = new DataSource();
         $data_table = $data_source->ejecutarConsulta(
             "SELECT * 
-            FROM Almuerzo
-            WHERE ID_almuerzo = :ID_almuerzo",
-            array(':ID_almuerzo' => $ID_almuerzo));
-    
+            FROM Grupo_Monitoria
+            WHERE Id_Monitoria = :Id_Monitoria",
+            array(':Id_Monitoria' => $Id_Monitoria)
+        );
+
         if (!$data_table || empty($data_table)) {
-            return null; 
+            return null;
         }
 
         $fila = $data_table[0];
-    
+
         return [
-            'ID_almuerzo' => $fila["ID_almuerzo"],
-            'nombre' => $fila["nombre"],
-            'descripcion' => $fila["descripcion"]
+            'Id_Monitoria' => $fila["Id_Monitoria"],
+            'Id_Monitor' => $fila["Id_Monitor"],
+            'Materia' => $fila["Materia"],
+            'Fecha' => $fila["Fecha"]
         ];
     }
 

@@ -86,9 +86,9 @@ if ($_SESSION["ID_ROL"] === 4) {
 								<a href="#" class="nav__logo">TUTOMARKET</a>
 							</div>
 							<div class="nav__list">
-								<a href="#" class="nav__link ">
+								<a href="menu.php" class="nav__link ">
 									<ion-icon name="home-outline" class="nav__icon"></ion-icon>
-									<span class="nav__name">Inicio </span>
+									<span class="nav__name">Pagina principal </span>
 								</a>
 								<a href="#" class="nav__link active" id="user-nav">
 									<i class='bx bx-user-circle'></i>
@@ -417,12 +417,13 @@ if ($_SESSION["ID_ROL"] === 4) {
 								</div>
 							</div>
 						</div>
-						<table class="activity-data table" id="almuerzosRegistrados">
+						<table class="activity-data table" id="gruposRegistrados">
 							<thead class="table">
 								<tr>
 									<th class="data-title" scope="col">ID</th>
-									<th class="data-title" scope="col">Nombre</th>
-									<th class="data-title" scope="col">Descripción</th>
+									<th class="data-title" scope="col">Monitor</th>
+									<th class="data-title" scope="col">Asignatura</th>
+									<th class="data-title" scope="col">Fecha creacion</th>
 									<th class="data-title" scope="col">Acciones</th>
 								</tr>
 							</thead>
@@ -467,11 +468,11 @@ if ($_SESSION["ID_ROL"] === 4) {
 					</div>
 
 					<!-- Modal EDITAR ALMUERZO-->
-					<div class="modal fade" id="modalEditarAlmuerzo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal fade" id="modalEditarGrupo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="ModalEditarLabel">Editar usuario</h5>
+									<h5 class="modal-title" id="ModalEditarLabel">Editar grupo</h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -480,15 +481,19 @@ if ($_SESSION["ID_ROL"] === 4) {
 									<div class="modal-body">
 										<div class="container-fluid">
 											<div style="padding:7px 0;" class="justify-content-center row">
-												<div class="col-md-8"><input placeholder="ID" type="text" class="form-control" name="ID_almuerzo" readonly>
+												<div class="col-md-8"><input placeholder="ID" type="text" class="form-control" name="Id_Monitoria" readonly>
 												</div>
 											</div>
 											<div style="padding:7px 0;" class="justify-content-center row">
-												<div class="col-md-8"><input placeholder="Nombre" type="text" class="form-control" name="nombre">
+												<div class="col-md-8"><input placeholder="ID" type="text" class="form-control" name="Id_Monitor" readonly>
 												</div>
 											</div>
 											<div style="padding:7px 0;" class="justify-content-center row">
-												<div class="col-md-8"><input placeholder="Descripción" class="form-control" name="descripcion">
+												<div class="col-md-8"><input placeholder="Asignatura" type="text" class="form-control" name="Materia">
+												</div>
+											</div>
+											<div style="padding:7px 0;" class="justify-content-center row">
+												<div class="col-md-8"><input placeholder="Fecha creacion" class="form-control" name="Fecha" readonly>
 												</div>
 											</div>
 
@@ -665,7 +670,8 @@ if ($_SESSION["ID_ROL"] === 4) {
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 	<script src="js/sweetalert2.all.min.js"></script>
 	<script src="js/administrar_usuario.js"></script>
-	<script src="js/administrar_almuerzos.js"></script>
+	<script src="js/administrar_grupos
+	.js"></script>
 	<script src="js/administrar_menu.js"></script>
 	<script src="js/cargarProgramas.js"></script>
 	<script src="js/cargarDias.js"></script>

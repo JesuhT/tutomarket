@@ -1,4 +1,4 @@
-$(document).ready(function() {
+/* $(document).ready(function() {
     ajaxCargarDias(); 
 });
 
@@ -26,4 +26,4 @@ function insertarDiasEnSelect(dias) {
     });
 }
 
-
+ */
