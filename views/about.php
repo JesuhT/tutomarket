@@ -1,4 +1,18 @@
-<!DOCTYPE html>
+<?php
+session_start();
+if (!isset($_SESSION['ID_USUARIO'])) {
+   // Redirige a login.php después de 2 segundos
+   echo '<script>
+        setTimeout(function() {
+            window.location = "login.php";
+        }, 2000);
+    </script>';
+   exit; // Asegura que no se procese más código PHP
+}
+
+?>
+
+!DOCTYPE html>
 <html lang="en">
 <head>
    <meta charset="UTF-8">
@@ -19,9 +33,9 @@
    
    <section class="flex">
 
-      <a href="home.html" class="logo">Educa.</a>
+      <a href="home.php" class="logo">Educa.</a>
 
-      <form action="search.html" method="post" class="search-form">
+      <form action="search.php" method="post" class="search-form">
          <input type="text" name="search_box" required placeholder="search courses..." maxlength="100">
          <button type="submit" class="fas fa-search"></button>
       </form>
@@ -37,10 +51,10 @@
          <img src="images/pic-1.jpg" class="image" alt="">
          <h3 class="name">shaikh anas</h3>
          <p class="role">studen</p>
-         <a href="profile.html" class="btn">view profile</a>
+         <a href="profile.php" class="btn">view profile</a>
          <div class="flex-btn">
-            <a href="login.html" class="option-btn">login</a>
-            <a href="register.html" class="option-btn">register</a>
+            <a href="login.php" class="option-btn">login</a>
+            <a href="register.php" class="option-btn">register</a>
          </div>
       </div>
 
@@ -55,18 +69,21 @@
    </div>
 
    <div class="profile">
-      <img src="images/pic-1.jpg" class="image" alt="">
-      <h3 class="name">shaikh anas</h3>
-      <p class="role">studen</p>
-      <a href="profile.html" class="btn">view profile</a>
+      <img src="/assets/img/people/pic-2.jpg" class="image" alt="">
+      <h3 class="name"><?php echo $_SESSION["NOMBRE"] . " ";
+                        echo $_SESSION["APELLIDO"];
+                        ?></h3>
+      <p class="role"><?php echo $_SESSION['NOMBRE_ROL'] . " "; ?></p>
+      <a href="profile.php" class="btn">view profile</a>
    </div>
 
    <nav class="navbar">
-      <a href="home.html"><i class="fas fa-home"></i><span>home</span></a>
-      <a href="about.html"><i class="fas fa-question"></i><span>about</span></a>
-      <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
-      <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>teachers</span></a>
-      <a href="contact.html"><i class="fas fa-headset"></i><span>contact us</span></a>
+      <a href="home.php"><i class="fas fa-home"></i><span>home</span></a>
+      <a href="about.php"><i class="fas fa-question"></i><span>Información</span></a>
+      <a href="courses.php"><i class="fa-solid fa-store"></i></i><span>Tienda</span></a>
+      <a href="courses.php"><i class="fas fa-graduation-cap"></i><span>Monitorias</span></a>
+      <a href="teachers.php"><i class="fas fa-chalkboard-user"></i><span>Monitores</span></a>
+      <a href="contact.php"><i class="fas fa-headset"></i><span>Contactanos</span></a>
    </nav>
 
 </div>
@@ -82,7 +99,7 @@
       <div class="content">
          <h3>why choose us?</h3>
          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut dolorum quasi illo? Distinctio expedita commodi, nemo a quam error repellendus sint, fugiat quis numquam eum eveniet sequi aspernatur quaerat tenetur.</p>
-         <a href="courses.html" class="inline-btn">our courses</a>
+         <a href="courses.php" class="inline-btn">our courses</a>
       </div>
 
    </div>

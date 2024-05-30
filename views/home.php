@@ -35,9 +35,9 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
       <section class="flex">
 
-         <a href="home.html" class="logo">TutoMarket</a>
+         <a href="home.php" class="logo">TutoMarket</a>
 
-         <form action="search.html" method="post" class="search-form">
+         <form action="search.php" method="post" class="search-form">
             <input type="text" name="search_box" required placeholder="search courses..." maxlength="100">
             <button type="submit" class="fas fa-search"></button>
          </form>
@@ -55,10 +55,10 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                               echo $_SESSION["APELLIDO"];
                               ?></h3>
             <p class="role"><?php echo $_SESSION['NOMBRE_ROL'] . " "; ?></p>
-            <a href="profile.html" class="btn">view profile</a>
+            <a href="profile.php" class="btn">view profile</a>
             <div class="flex-btn">
-               <a href="login.html" class="option-btn">login</a>
-               <a href="register.html" class="option-btn">register</a>
+               <a href="login.php" class="option-btn">login</a>
+               <a href="register.php" class="option-btn">register</a>
             </div>
          </div>
 
@@ -73,21 +73,21 @@ if (!isset($_SESSION['ID_USUARIO'])) {
       </div>
 
       <div class="profile">
-         <img src="images/pic-1.jpg" class="image" alt="">
+         <img src="/assets/img/people/pic-2.jpg" class="image" alt="">
          <h3 class="name"><?php echo $_SESSION["NOMBRE"] . " ";
                            echo $_SESSION["APELLIDO"];
                            ?></h3>
          <p class="role"><?php echo $_SESSION['NOMBRE_ROL'] . " "; ?></p>
-         <a href="profile.html" class="btn">view profile</a>
+         <a href="profile.php" class="btn">view profile</a>
       </div>
 
       <nav class="navbar">
          <a href="home.php"><i class="fas fa-home"></i><span>home</span></a>
-         <a href="about.html"><i class="fas fa-question"></i><span>Información</span></a>
-         <a href="courses.html"><i class="fa-solid fa-store"></i></i><span>Tienda</span></a>
-         <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>Monitorias</span></a>
-         <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Monitores</span></a>
-         <a href="contact.html"><i class="fas fa-headset"></i><span>Contactanos</span></a>
+         <a href="about.php"><i class="fas fa-question"></i><span>Información</span></a>
+         <a href="courses.php"><i class="fa-solid fa-store"></i></i><span>Tienda</span></a>
+         <a href="courses.php"><i class="fas fa-graduation-cap"></i><span>Monitorias</span></a>
+         <a href="teachers.php"><i class="fas fa-chalkboard-user"></i><span>Monitores</span></a>
+         <a href="contact.php"><i class="fas fa-headset"></i><span>Contactanos</span></a>
       </nav>
 
    </div>
@@ -137,7 +137,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
          <div class="box">
             <h3 class="title">become a tutor</h3>
             <p class="tutor">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis, nam?</p>
-            <a href="teachers.html" class="inline-btn">get started</a>
+            <a href="teachers.php" class="inline-btn">get started</a>
          </div>
 
       </div>
@@ -165,7 +165,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                <span>10 videos</span>
             </div>
             <h3 class="title">complete HTML tutorial</h3>
-            <a href="playlist.html" class="inline-btn">view playlist</a>
+            <a href="playlist.php" class="inline-btn">view playlist</a>
          </div>
 
          <div class="box">
@@ -181,7 +181,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                <span>10 videos</span>
             </div>
             <h3 class="title">complete CSS tutorial</h3>
-            <a href="playlist.html" class="inline-btn">view playlist</a>
+            <a href="playlist.php" class="inline-btn">view playlist</a>
          </div>
 
          <div class="box">
@@ -197,7 +197,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                <span>10 videos</span>
             </div>
             <h3 class="title">complete JS tutorial</h3>
-            <a href="playlist.html" class="inline-btn">view playlist</a>
+            <a href="playlist.php" class="inline-btn">view playlist</a>
          </div>
 
          <div class="box">
@@ -213,7 +213,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                <span>10 videos</span>
             </div>
             <h3 class="title">complete Boostrap tutorial</h3>
-            <a href="playlist.html" class="inline-btn">view playlist</a>
+            <a href="playlist.php" class="inline-btn">view playlist</a>
          </div>
 
          <div class="box">
@@ -229,7 +229,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                <span>10 videos</span>
             </div>
             <h3 class="title">complete JQuery tutorial</h3>
-            <a href="playlist.html" class="inline-btn">view playlist</a>
+            <a href="playlist.php" class="inline-btn">view playlist</a>
          </div>
 
          <div class="box">
@@ -245,13 +245,13 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                <span>10 videos</span>
             </div>
             <h3 class="title">complete SASS tutorial</h3>
-            <a href="playlist.html" class="inline-btn">view playlist</a>
+            <a href="playlist.php" class="inline-btn">view playlist</a>
          </div>
 
       </div>
 
       <div class="more-btn">
-         <a href="courses.html" class="inline-option-btn">view all courses</a>
+         <a href="courses.php" class="inline-option-btn">view all courses</a>
       </div>
 
    </section>
