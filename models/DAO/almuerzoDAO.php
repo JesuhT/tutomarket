@@ -98,20 +98,27 @@ class AlmuerzoDAO
     }
 
 
-    public function modificarAlmuerzo(Almuerzo $almuerzo)
+    public function modificarGrupo(Grupo_Monitoria $grupo)
     {
         $data_source = new DataSource();
-        $sql = "UPDATE Almuerzo SET ID_almuerzo=:ID_almuerzo, nombre = :nombre, descripcion = :descripcion WHERE ID_almuerzo = :ID_almuerzo";
+        $sql = "UPDATE Grupo_Monitoria SET 
+                    Id_Monitor = :Id_Monitor, 
+                    Materia = :Materia, 
+                    Fecha = :Fecha 
+                WHERE Id_Monitoria = :Id_Monitoria";
+
         $resultado = $data_source->ejecutarActualizacion(
             $sql,
             array(
-                ':ID_almuerzo' => $almuerzo->getID_almuerzo(),
-                ':nombre' => $almuerzo->getNombre(),
-                ':descripcion' => $almuerzo->getDescripcion(),
+                ':Id_Monitoria' => $grupo->getId_Monitoria(),
+                ':Id_Monitor' => $grupo->getId_Monitor(),
+                ':Materia' => $grupo->getMateria(),
+                ':Fecha' => $grupo->getFecha()
             )
         );
         return $resultado;
     }
+
     public function buscarGrupoPorId($Id_Monitoria)
     {
         $data_source = new DataSource();
@@ -136,10 +143,10 @@ class AlmuerzoDAO
         ];
     }
 
-    public function borrarAlmuerzo($ID)
+    public function borrarGrupo($ID)
     {
         $data_source = new DataSource();
-        $resultado = $data_source->ejecutarActualizacion("DELETE FROM Almuerzo WHERE ID_almuerzo = :ID_almuerzo", array('ID_almuerzo' => $ID));
+        $resultado = $data_source->ejecutarActualizacion("DELETE FROM Grupo_Monitoria WHERE Id_Monitoria = :Id_Grupo", array('Id_Grupo' => $ID));
 
         return $resultado;
     }

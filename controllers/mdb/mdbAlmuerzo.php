@@ -18,9 +18,9 @@ function leerGrupos() {
     return $almuerzos;
 }
 
-function modificarAlmuerzo($almuerzo) {
+function modificarGrupo($grupo) {
     $dao = new AlmuerzoDAO();
-    $resultado = $dao->modificarAlmuerzo($almuerzo);
+    $resultado = $dao->modificarGrupo($grupo);
     return $resultado;
 }
 
@@ -30,9 +30,9 @@ function buscarGrupoPorId($id) {
     return $resultado;
 }
 
-function borrarAlmuerzo($id) {
+function borrarGrupo($id) {
     $dao = new AlmuerzoDAO();
-    $resultado = $dao->borrarAlmuerzo($id);
+    $resultado = $dao->borrarGrupo($id);
     return $resultado;
 }
 

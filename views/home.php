@@ -55,10 +55,10 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                               echo $_SESSION["APELLIDO"];
                               ?></h3>
             <p class="role"><?php echo $_SESSION['NOMBRE_ROL'] . " "; ?></p>
-            <a href="profile.php" class="btn">view profile</a>
+            <a href="profile.php" class="btn">Ver perfil</a>
             <div class="flex-btn">
-               <a href="login.php" class="option-btn">login</a>
-               <a href="register.php" class="option-btn">register</a>
+               <a href="login.php" class="option-btn"></a>
+               <a href="../controllers/action/logout.php" class="option-btn">Cerrar sesion</a>
             </div>
          </div>
 
@@ -78,7 +78,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                            echo $_SESSION["APELLIDO"];
                            ?></h3>
          <p class="role"><?php echo $_SESSION['NOMBRE_ROL'] . " "; ?></p>
-         <a href="profile.php" class="btn">view profile</a>
+         <a href="profile.php" class="btn">Ver perfil</a>
       </div>
 
       <nav class="navbar">

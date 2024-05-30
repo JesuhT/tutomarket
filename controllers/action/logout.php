@@ -10,4 +10,3 @@ unset($_SESSION['ROL']);
 unset($_SESSION['CONTRASENA']);
 session_destroy();
 header("Location: /../../index.php");
-?>

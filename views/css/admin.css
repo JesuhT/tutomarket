@@ -698,12 +698,14 @@ input[type="search"]{
 }
 
 #loader {
-  border: 16px solid #3498db;
-  border-top: 16px solid #0645c3;
+  border: 16px solid rgba(142, 68, 173, 0.3);
+  border-top: 16px solid var(--primary-color);
   border-radius: 50%;
   width: 120px;
   height: 120px;
   animation: spin 1s linear infinite;
+  outline-style: groove;
+  outline-width: 1px;
 }
 
 .loader-section {

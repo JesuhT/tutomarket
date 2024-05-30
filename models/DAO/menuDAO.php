@@ -1,72 +1,80 @@
 <?php
 require_once("datasource.php");
-require_once(__DIR__ . "/../entities/AlmuerzosEnMenu.php");
+require_once(__DIR__ . "/../entities/Articulo.php");
 
 class AlmuerzoEnMenuDAO
 {
-    public function leerAlmuerzosMenu(){
-        $data_source = new DataSource();
-        $data_table = $data_source->ejecutarConsulta("SELECT a.ID_almuerzo, a.nombre AS nombreAl, m.ID_menu, d.nombre AS dia
-                  FROM Almuerzo a
-                  INNER JOIN Almuerzos_En_Menu am ON a.ID_almuerzo = am.ID_almuerzo
-                  INNER JOIN Menu m ON am.ID_menu = m.ID_menu
-                  INNER JOIN Dia_almuerzo d ON m.ID_dia = d.ID_dia", null);
-
-        if (!$data_table) {
-            return array();
-        }
-
-        $almuerzosEnMenu = array();
-
-        foreach($data_table as $fila){
-            $almuerzoEnMenu = array(
-                'ID_almuerzo' => $fila["ID_almuerzo"],
-                'nombre' => $fila["nombreAl"],
-                'ID_menu' => $fila["ID_menu"],
-                'dia' => $fila["dia"]
-            );
-            $almuerzosEnMenu[] = $almuerzoEnMenu;
-        }
-        
-        return $almuerzosEnMenu;
-    }
-    public function buscarAlmuerzoMenuPorId($id,$menu){
-        $data_source = new DataSource();
-        $data_table = $data_source->ejecutarConsulta("SELECT a.ID_almuerzo, a.nombre AS nombreAl, m.ID_menu, d.ID_dia, d.nombre AS dia
-                  FROM Almuerzo a
-                  INNER JOIN Almuerzos_En_Menu am ON a.ID_almuerzo = am.ID_almuerzo
-                  INNER JOIN Menu m ON am.ID_menu = m.ID_menu
-                  INNER JOIN Dia_almuerzo d ON m.ID_dia = d.ID_dia
-                  WHERE am.ID_almuerzo = :ID_almuerzo and am.ID_menu = :ID_menu", array(':ID_almuerzo' => $id, ':ID_menu' => $menu));
-
-        if (!$data_table) {
-            return array();
-        }
-
-        $almuerzosEnMenu = array();
-
-        foreach($data_table as $fila){
-            $almuerzoEnMenu = array(
-                'ID_almuerzo' => $fila["ID_almuerzo"],
-                'nombre' => $fila["nombreAl"],
-                'ID_menu' => $fila["ID_menu"],
-                'ID_dia' => $fila["ID_dia"],
-                'dia' => $fila["dia"]
-            );
-            $almuerzosEnMenu[] = $almuerzoEnMenu;
-        }
-        
-        return $almuerzosEnMenu;
-    }
-
-    public function borrarAlmuerzoMenu($ID, $menu)
+    public function leerArticulos()
     {
         $data_source = new DataSource();
-        $resultado = $data_source->ejecutarActualizacion("DELETE FROM Almuerzos_En_Menu WHERE ID_almuerzo = :ID_almuerzo and ID_menu = :ID_menu", array(':ID_almuerzo' => $ID, ':ID_menu' => $menu));
+        $data_table = $data_source->ejecutarConsulta(
+            "SELECT a.Id_Articulo, a.Nombre AS nombre, a.Descripcion, a.Precio, a.Id_Vendedor, a.Fecha_Publicacion
+            FROM Articulo a",
+            null
+        );
+
+        if (!$data_table) {
+            return array();
+        }
+
+        $articulos = array();
+
+        foreach ($data_table as $fila) {
+            $articulo = array(
+                'ID_Articulo' => $fila["Id_Articulo"],
+                'nombre' => $fila["nombre"],
+                'descripcion' => $fila["Descripcion"],
+                'precio' => $fila["Precio"],
+                'ID_Vendedor' => $fila["Id_Vendedor"],
+                'Fecha' => $fila["Fecha_Publicacion"],
+            );
+            $articulos[] = $articulo;
+        }
+
+        return $articulos;
+    }
+
+    public function buscarArticuloPorId($ID_Articulo)
+    {
+        $data_source = new DataSource();
+        $data_table = $data_source->ejecutarConsulta(
+            "SELECT * 
+            FROM Articulo
+            WHERE Id_Articulo = :ID_Articulo",
+            array(':ID_Articulo' => $ID_Articulo)
+        );
+
+        if (!$data_table || empty($data_table)) {
+            return null;
+        }
+
+        $fila = $data_table[0];
+
+        return [
+            'ID_Articulo' => $fila["Id_Articulo"],
+            'nombre' => $fila["Nombre"],
+            'descripcion' => $fila["Descripcion"],
+            'precio' => $fila["Precio"],
+            'ID_Vendedor' => $fila["Id_Vendedor"],
+            'Fecha' => $fila["Fecha_Publicacion"],
+        ];
+    }
+
+
+
+    public function borrarArticulo($ID_Articulo)
+    {
+        $data_source = new DataSource();
+        $resultado = $data_source->ejecutarActualizacion(
+            "DELETE FROM Articulo WHERE Id_Articulo = :ID_Articulo",
+            array(':ID_Articulo' => $ID_Articulo)
+        );
 
         return $resultado;
     }
-    public function insertarAlmuerzoMenu($almuerzo){
+
+    public function insertarAlmuerzoMenu($almuerzo)
+    {
         $data_source = new DataSource();
         $sql = "INSERT INTO Almuerzos_En_Menu (ID_menu,ID_almuerzo) VALUES (:ID_menu,:ID_almuerzo)";
         $resultado = $data_source->ejecutarActualizacion(
@@ -80,6 +88,29 @@ class AlmuerzoEnMenuDAO
 
         return $resultado;
     }
-}
+    public function modificarArticulo(Articulo $articulo)
+    {
+        $data_source = new DataSource();
+        $sql = "UPDATE Articulo SET 
+                    Id_Articulo = :Id_Articulo, 
+                    Id_Vendedor = :vendedor,
+                    Nombre = :nombre, 
+                    Descripcion = :descripcion,
+                    Precio = :precio
+                    
+                WHERE Id_Articulo = :Id_Articulo";
 
-?>
+        $resultado = $data_source->ejecutarActualizacion(
+            $sql,
+            array(
+                ':Id_Articulo' => $articulo->getId_Articulo(),
+                ':vendedor' => $articulo->getId_Vendedor(),
+                ':nombre' => $articulo->getNombre(),
+                ':descripcion' => $articulo->getDescripcion(),
+                ':precio' => $articulo->getPrecio(),
+                
+            )
+        );
+        return $resultado;
+    }
+}
