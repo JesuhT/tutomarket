@@ -65,7 +65,7 @@ $(document).ready(function () {
           timer: 1500
         }).then(function () {
           if (result.msg!="El usuario ha sido registrado correctamente, Inicia sesion" && result.estado==true) {
-            window.location.href = 'menu.php';
+            window.location.href = 'home.php';
           } else if(result.msg=="El usuario ha sido registrado correctamente, Inicia sesion"){
                 window.location.href = 'login.php';
             }
