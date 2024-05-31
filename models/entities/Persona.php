@@ -10,8 +10,9 @@ class Persona {
     private $Id_Programa;
     private $Id_Estado;
     private $Biografia;
+    private $ruta_imagen;
 
-    public function __construct($Id_Persona, $Nombre, $Apellido, $Correo_Institucional, $Codigo_Estudiantil, $Celular, $Id_Rol, $Id_Programa, $Id_Estado, $Biografia) {
+    public function __construct($Id_Persona, $Nombre, $Apellido, $Correo_Institucional, $Codigo_Estudiantil, $Celular, $Id_Rol, $Id_Programa, $Id_Estado, $Biografia,$ruta_imagen) {
         $this->Id_Persona = $Id_Persona;
         $this->Nombre = $Nombre;
         $this->Apellido = $Apellido;
@@ -22,6 +23,7 @@ class Persona {
         $this->Id_Programa = $Id_Programa;
         $this->Id_Estado = $Id_Estado;
         $this->Biografia = $Biografia;
+        $this->ruta_imagen = $ruta_imagen;
     }
 
     public function getId_Persona() {
@@ -62,6 +64,9 @@ class Persona {
 
     public function getBiografia() {
         return $this->Biografia;
+    }
+    public function getRuta_Imagen() {
+        return $this->ruta_imagen;
     }
 
     public function setNombre($Nombre) {

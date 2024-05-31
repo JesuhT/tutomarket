@@ -29,7 +29,8 @@ class UsuarioDAO
                 $data["Id_Rol"],
                 $data["Id_Programa"],
                 $data["Id_Estado"],
-                $data["Biografia"]
+                $data["Biografia"],
+                null
             );
             return $usuario;
         }
@@ -64,7 +65,8 @@ class UsuarioDAO
                 $data["Id_Rol"],
                 $data["Id_Programa"],
                 $data["Id_Estado"],
-                $data["Biografia"]
+                $data["Biografia"],
+                null
             );
             $usuarioArray = array(
                 'Id_Persona' => $usuario->getId_Persona(),
@@ -105,7 +107,8 @@ class UsuarioDAO
                 $data_table[$indice]["Id_Rol"],
                 $data_table[$indice]["Id_Programa"],
                 $data_table[$indice]["Id_Estado"],
-                $data_table[$indice]["Biografia"]
+                $data_table[$indice]["Biografia"],
+                null
             );
 
             $programa = buscarProgramaPorId($persona->getId_Programa());
@@ -245,7 +248,8 @@ class UsuarioDAO
                     $data_table[$indice]["Id_Rol"],
                     $data_table[$indice]["Id_Programa"],
                     $data_table[$indice]["Id_Estado"],
-                    $data_table[$indice]["Biografia"]
+                    $data_table[$indice]["Biografia"],
+                    null
                 );
 
                 array_push($personas, $persona);

@@ -31,6 +31,24 @@ function data() {
 $(document).ready(function () {
   $('form').submit(function (event) {
     event.preventDefault();
+    if ($(this).attr('id') === 'registroForm') {
+      var nombre = $.trim($("input[name='nombres']").val());
+      var apellido = $.trim($("input[name='apellidos']").val());
+      var emailRegistro = $.trim($("input[name='email']").val());
+      var passwordRegistro = $.trim($("input[name='pswd']").val());
+      var telefono = $.trim($("input[name='celular']").val());
+      var tipoUsuario = $("select[name='user-type']").val();
+      var codigoEstudiantil = $.trim($("input[name='codigo']").val());
+      var programa = $("select[name='programa']").val();
+
+      if (nombre.length === 0 || apellido.length === 0 || emailRegistro.length === 0 || passwordRegistro.length === 0 || telefono.length === 0 || tipoUsuario === null || codigoEstudiantil.length === 0 || programa === null) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Debe completar todos los campos en el formulario de registro',
+        });
+        return false;
+      }
+    }
 
     // Hacer la solicitud AJAX
     $.ajax({
@@ -124,7 +142,7 @@ function insertarDatosUsuarioEnModal() {
         $("#modalEditarUsuario input[name='codigo']").val(usuario.Codigo_Estudiantil);
         $("#modalEditarUsuario input[name='celular']").val(usuario.Celular);
         $("#modalEditarUsuario input[name='biografia']").val(usuario.Biografia);
-        
+
         // Seleccionar el programa del usuario en el select correspondiente
         var programaSelect = $("#modalEditarUsuario select[name='programa']");
         programaSelect.val(usuario.Id_Programa);
@@ -160,7 +178,7 @@ function insertarDatosUsuarioEnModal() {
           success: function (response) {
             console.log(response);
             var result = JSON.parse(response);
-            
+
             Swal.fire({
               icon: result.estado ? 'success' : 'error',
               title: result.msg,

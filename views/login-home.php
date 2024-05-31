@@ -78,13 +78,15 @@ if (!isset($_SESSION['ID_USUARIO'])) {
    </div>
 
    <nav class="navbar">
-      <a href="home.php"><i class="fas fa-home"></i><span>home</span></a>
-      <a href="about.php"><i class="fas fa-question"></i><span>Información</span></a>
-      <a href="courses.php"><i class="fa-solid fa-store"></i></i><span>Tienda</span></a>
-      <a href="courses.php"><i class="fas fa-graduation-cap"></i><span>Monitorias</span></a>
-      <a href="teachers.php"><i class="fas fa-chalkboard-user"></i><span>Monitores</span></a>
-      <a href="contact.php"><i class="fas fa-headset"></i><span>Contactanos</span></a>
-   </nav>
+         <a href="home.php"><i class="fas fa-home"></i><span>home</span></a>
+         <a href="courses.php"><i class="fa-solid fa-store"></i></i><span>Tienda</span></a>
+         <a href="courses.php"><i class="fas fa-graduation-cap"></i><span>Monitorias</span></a>
+         <a href="teachers.php"><i class="fas fa-chalkboard-user"></i><span>Monitores</span></a>
+         <a href="dashboardadmin.php"><i class="fa-solid fa-user-tie"></i><span>Dashboard</span></a>
+         <a href="dashboardadmin.php"><i class="fa-solid fa-user-group"></i><span>Mis grupos</span></a>
+         <a href="dashboardadmin.php"><i class="fa-solid fa-hand-holding-dollar"></i><span>Mis articulos</span></a>
+         <a href="contact.php"><i class="fas fa-headset"></i><span>Contactanos</span></a>
+      </nav>
 
 </div>
 

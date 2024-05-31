@@ -15,7 +15,7 @@ if ($_SESSION["ID_ROL"] === 2) {
 	// Redirige a index.php después de 2 segundos
 	echo '<script>
 		setTimeout(function () {
-			window.location = "menu.php";
+			window.location = "home.php";
 		}, 2000);
 	</script>';
 	exit; // Asegura que no se procese más código PHP
@@ -24,7 +24,7 @@ if ($_SESSION["ID_ROL"] === 3) {
 	// Redirige a index.php después de 2 segundos
 	echo '<script>
 		setTimeout(function () {
-			window.location = "menu.php";
+			window.location = "home.php";
 		}, 2000);
 	</script>';
 	exit; // Asegura que no se procese más código PHP
@@ -33,7 +33,7 @@ if ($_SESSION["ID_ROL"] === 4) {
 	// Redirige a index.php después de 2 segundos
 	echo '<script>
 		setTimeout(function () {
-			window.location = "menu.php";
+			window.location = "home.php";
 		}, 2000);
 	</script>';
 	exit; // Asegura que no se procese más código PHP
@@ -86,7 +86,7 @@ if ($_SESSION["ID_ROL"] === 4) {
 								<a href="#" class="nav__logo">TUTOMARKET</a>
 							</div>
 							<div class="nav__list">
-								<a href="menu.php" class="nav__link ">
+								<a href="home.php" class="nav__link ">
 									<ion-icon name="home-outline" class="nav__icon"></ion-icon>
 									<span class="nav__name">Pagina principal </span>
 								</a>
@@ -259,13 +259,10 @@ if ($_SESSION["ID_ROL"] === 4) {
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
-								<form action="/../controllers/actionadmin/registrarUsuario.php" method="post">
+								<form id="registroForm" action="/../controllers/actionadmin/registrarUsuario.php" method="post">
 									<div class="modal-body">
 										<div class="container-fluid">
-											<div style="padding:7px 0;" class="justify-content-center row">
-												<div class="col-md-8"><input placeholder="ID usuario" type="text" class="form-control" name="IdUsuario" readonly>
-												</div>
-											</div>
+											
 											<div style="padding:7px 0;" class="justify-content-center row">
 												<div class="col-md-8"><input placeholder="Nombres" type="text" class="form-control" name="nombres">
 												</div>
@@ -290,6 +287,14 @@ if ($_SESSION["ID_ROL"] === 4) {
 												</div>
 											</div>
 											<div style="padding:7px 0;" class="justify-content-center row">
+												<div class="col-md-8"><input placeholder="Crea un usuario" type="text" class="form-control" name="username">
+												</div>
+											</div>
+											<div style="padding:7px 0;" class="justify-content-center row">
+												<div class="col-md-8"><input placeholder="Inserta una contraseña" type="text" class="form-control" name="pswd">
+												</div>
+											</div>
+											<div style="padding:7px 0;" class="justify-content-center row">
 												<div class="rol col-md-8">
 													<select class="programaSelect form-control" name="programa">
 														<option disabled selected>Programa</option>
@@ -298,7 +303,7 @@ if ($_SESSION["ID_ROL"] === 4) {
 											</div>
 											<div style="padding:7px 0;" class="justify-content-center row">
 												<div class="rol col-md-8">
-													<select class=" form-control" name="rol">
+													<select class=" form-control" name="user-type">
 														<option disabled selected>Elegir rol</option>
 														<option value="1">Administrador</option>
 														<option value="2">Estudiante</option>
@@ -409,13 +414,13 @@ if ($_SESSION["ID_ROL"] === 4) {
 							<i class='bx bxs-group'></i>
 							<span class="text">Monitorias</span>
 							<!-- Button trigger modal -->
-							<div class="container-fluid">
+							<!-- <div class="container-fluid">
 								<div class="justify-content-center row">
 									<button type="button" class="btn acceptButton" data-toggle="modal" data-target="#modalCrearAlmuerzo">
 										Crear grupo
 									</button>
 								</div>
-							</div>
+							</div> -->
 						</div>
 						<table class="activity-data table" id="gruposRegistrados">
 							<thead class="table">
@@ -517,13 +522,13 @@ if ($_SESSION["ID_ROL"] === 4) {
 							<i class='bx bx-cart-add'></i>
 							<span class="text">Articulos</span>
 							<!-- Button trigger modal -->
-							<div class="container-fluid">
+							<!-- <div class="container-fluid">
 								<div class="justify-content-center row">
 									<button type="button" class="btn acceptButton" data-toggle="modal" data-target="#agregarAlmuerzoMenu">
 										Crear articulo
 									</button>
 								</div>
-							</div>
+							</div> -->
 						</div>
 						<table class="activity-data table" id="articulosRegistrados">
 							<thead class="table">

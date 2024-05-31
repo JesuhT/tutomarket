@@ -17,6 +17,12 @@ function leerGrupos() {
     $almuerzos = $dao->leerGrupos();
     return $almuerzos;
 }
+function leerGruposHome() {
+    $dao = new AlmuerzoDAO();
+    $almuerzos = $dao->leerGruposHome();
+    return $almuerzos;
+}
+
 
 function modificarGrupo($grupo) {
     $dao = new AlmuerzoDAO();

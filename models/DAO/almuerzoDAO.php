@@ -96,6 +96,34 @@ class AlmuerzoDAO
         }
         return $gruposArray;
     }
+    
+    function leerGruposHome() {
+        $data_source = new DataSource();
+        $sql = "SELECT gm.Id_Monitoria, gm.Id_Monitor, gm.Materia, gm.Fecha, rg.ruta_imagen 
+                FROM Grupo_Monitoria gm
+                LEFT JOIN Ruta_Grupo rg ON gm.Id_Monitoria = rg.Id_Grupo";
+        $data_table = $data_source->ejecutarConsulta($sql);
+    
+        if (!$data_table) {
+            return array();
+        }
+    
+        $grupos = array();
+    
+        foreach ($data_table as $fila) {
+            $grupo = array(
+                'Id_Monitoria' => $fila["Id_Monitoria"],
+                'Id_Monitor' => $fila["Id_Monitor"],
+                'Materia' => $fila["Materia"],
+                'Fecha' => $fila["Fecha"],
+                'ruta_imagen' => $fila["ruta_imagen"]
+            );
+            $grupos[] = $grupo;
+        }
+    
+        return $grupos;
+    }
+
 
 
     public function modificarGrupo(Grupo_Monitoria $grupo)

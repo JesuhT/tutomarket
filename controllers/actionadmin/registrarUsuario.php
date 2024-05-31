@@ -1,62 +1,69 @@
 <?php
-   
-    session_start();
-    
-    require_once (__DIR__."/../mdb/mdbUser.php");
-    require_once (__DIR__."/../../models/entities/Usuario.php");
-    
-        $nombres = filter_input(INPUT_POST,'nombres');
-        $apellidos = filter_input(INPUT_POST,'apellidos');
-        $email = filter_input(INPUT_POST,'email');
-        $contrasena = filter_input(INPUT_POST,'contrasena');
-        $celular = filter_input(INPUT_POST,'celular');
-        $idRol = filter_input(INPUT_POST,'rol');
-        $idPrograma = filter_input(INPUT_POST,'programa');
-        $nemail="Email";
-        $ntele="Celular";
-        // Verificar existencia de email
-        if (verificarExistencia($email, $nemail)) {
-            $estado = false;
-            $msg = "Este email ya está siendo utilizado, ingrese un email distinto";
-            $resultado = [
-                'estado' => $estado,
-                'msg' => $msg
-            ];
-            if (!$estado) {
-                echo json_encode($resultado);
-                exit;
-            }
-        
-        }
+require_once("../../controllers/mdb/mdbUser.php");
+require_once("../../models/entities/Usuario.php");
+require_once("../../models/entities/Persona.php");
 
-        // Verificar existencia de celular
-        if (verificarExistencia($celular, $ntele)) {
-            $estado = false;
-            $msg = "Este celular ya está siendo utilizado, ingrese un celular distinto";
-            $resultado = [
-                'estado' => $estado,
-                'msg' => $msg
-            ];
-            if (!$estado) {
-                echo json_encode($resultado);
-                exit;
-            }
-        
-        }
+// Recibir datos del formulario
+$nombre = $_POST['nombres'];
+$apellido = $_POST['apellidos'];
+$email = $_POST['email'];
+$password = $_POST['pswd'];
+$telefono = $_POST['celular'];
+$ID_programa = $_POST['programa'];
+$code = $_POST['codigo'];
+$bio = $_POST['biografia'];
+$ID_rol = $_POST['user-type'];; // El rol por defecto, según tus requerimientos
+$Id_Estado = 1;
+$msg = "por defecto";
 
-        $usuario = new Usuario(NULL, $nombres, $apellidos, $email, $contrasena, $celular, $idPrograma, $idRol);
-        $success  = insertarUsuario($usuario);
+// Etiquetas para verificar existencia de email y teléfono
+$nemail = "Correo_Institucional";
+$ntele = "Celular";
 
-            $estado=true;
-        
-        
-        $msg =  "El usuario ha sido registrado correctamente";
-        $resultado = [
-            'estado' => $estado,
-            'msg' => $msg
-        ];
-    
+// Verificar existencia de email
+if (verificarExistencia($email, $nemail)) {
+    $estado = false;
+    $msg = "Este correo electrónico ya está siendo utilizado, inicie sesión o ingrese uno diferente";
+    $resultado = [
+        'estado' => $estado,
+        'msg' => $msg
+    ];
     echo json_encode($resultado);
-        
-        
+    exit;
+}
 
+// Verificar existencia de celular
+if (verificarExistencia($telefono, $ntele)) {
+    $estado = false;
+    $msg = "Este número de celular ya está siendo utilizado, inicie sesión o ingrese uno diferente";
+    $resultado = [
+        'estado' => $estado,
+        'msg' => $msg
+    ];
+    echo json_encode($resultado);
+    exit;
+}
+
+// Crear objeto Persona y Usuario
+$persona = new Persona(null, $nombre, $apellido, $email, $code, $telefono, $ID_rol, $ID_programa, $Id_Estado, $bio,null);
+$usuario = new Usuario(null, $email, $password); // El ID_Usuario se asignará automáticamente al insertar
+
+// Insertar persona y usuario en la base de datos
+$success_persona = insertarPersona($persona);
+$success_usuario = insertarUsuario($usuario);
+
+if ($success_persona && $success_usuario) {
+    $estado = true;
+    $msg = "El usuario ha sido registrado correctamente, inicia sesión";
+} else {
+    $estado = false;
+    $msg = "Hubo un error al registrar el usuario, por favor inténtelo nuevamente";
+}
+
+$resultado = [
+    'estado' => $estado,
+    'msg' => $msg
+];
+echo json_encode($resultado);
+
+?>

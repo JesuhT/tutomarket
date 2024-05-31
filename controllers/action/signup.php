@@ -45,7 +45,7 @@ if (verificarExistencia($telefono, $ntele)) {
 }
 
 // Crear objeto Persona y Usuario
-$persona = new Persona(null, $nombre, $apellido, $email, $code, $telefono, $ID_rol, $ID_programa, $Id_Estado, $bio);
+$persona = new Persona(null, $nombre, $apellido, $email, $code, $telefono, $ID_rol, $ID_programa, $Id_Estado, $bio,null);
 $usuario = new Usuario(null, $email, $password); // El ID_Usuario se asignará automáticamente al insertar
 
 // Insertar persona y usuario en la base de datos

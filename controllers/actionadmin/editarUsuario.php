@@ -19,7 +19,7 @@ $idPrograma = filter_input(INPUT_POST, 'programa');
 $biografia = filter_input(INPUT_POST, 'biografia');
 $idEstado = filter_input(INPUT_POST, 'estado');;
 
-$persona = new Persona($idPersona, $nombres, $apellidos, $email, $codigo, $celular, $idRol, $idPrograma,$idEstado, $biografia);
+$persona = new Persona($idPersona, $nombres, $apellidos, $email, $codigo, $celular, $idRol, $idPrograma,$idEstado, $biografia, null);
 $success = modificarPersona($persona);
 
 $estado = $success ? true : false;
