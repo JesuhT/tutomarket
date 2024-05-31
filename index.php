@@ -394,7 +394,7 @@
     <!--Review-->
 
     <div class="review" id="Review">
-        <h1>Customer<span>Review</span></h1>
+        <h1>Calificaciones de<span> Usuarios</span></h1>
 
         <div class="review_box">
             <div class="review_card">
@@ -560,16 +560,16 @@
         <div class="footer_main">
 
             <div class="footer_tag">
-                <h2>Location</h2>
-                <p>Sri Lanka</p>
-                <p>USA</p>
-                <p>India</p>
-                <p>Japan</p>
-                <p>Italy</p>
+                <h2>Locación</h2>
+                <p>Santa Marta</p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
             </div>
 
             <div class="footer_tag">
-                <h2>Quick Link</h2>
+                <h2>Acceso rápido</h2>
                 <p>Home</p>
                 <p>About</p>
                 <p>Menu</p>
@@ -578,7 +578,7 @@
             </div>
 
             <div class="footer_tag">
-                <h2>Contact</h2>
+                <h2>Contacto</h2>
                 <p>+94 12 3456 789</p>
                 <p>+94 25 5568456</p>
                 <p>johndeo123@gmail.com</p>
@@ -586,10 +586,10 @@
             </div>
 
             <div class="footer_tag">
-                <h2>Our Service</h2>
-                <p>Fast Delivery</p>
-                <p>Easy Payments</p>
-                <p>24 x 7 Service</p>
+                <h2>Nuestros servicios</h2>
+                <p>Monitorias</p>
+                <p>Venta de Articulos</p>
+                <p>Promocionar negocios</p>
             </div>
 
             <div class="footer_tag">
@@ -602,7 +602,7 @@
 
         </div>
 
-        <p class="end">Design by<span><i class="fa-solid fa-face-grin"></i> WT Master Code</span></p>
+        
 
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
