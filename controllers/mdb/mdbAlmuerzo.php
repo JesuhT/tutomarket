@@ -35,7 +35,11 @@ function buscarGrupoPorId($id) {
     $resultado = $dao->buscarGrupoPorId($id);
     return $resultado;
 }
-
+function buscarGrupoPorIdPlay($id) {
+    $dao = new AlmuerzoDAO();
+    $resultado = $dao->buscarGrupoPorIdPlay($id);
+    return $resultado;
+}
 function borrarGrupo($id) {
     $dao = new AlmuerzoDAO();
     $resultado = $dao->borrarGrupo($id);

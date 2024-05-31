@@ -1,282 +1,175 @@
 <?php
 session_start();
-
 if (!isset($_SESSION['ID_USUARIO'])) {
-	// Redirige a login.php después de 2 segundos
-	echo '<script>
+   // Redirige a login.php después de 2 segundos
+   echo '<script>
         setTimeout(function() {
             window.location = "login.php";
         }, 2000);
     </script>';
-	exit; // Asegura que no se procese más código PHP
+   exit; // Asegura que no se procese más código PHP
 }
 
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perfil</title>
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <link rel="stylesheet" href="css/profile.css">
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>profile</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="css/home.css">
+
 </head>
 
 <body>
 
-<header class="header-area">
-    <nav class="navigation-s">
-      <div class="navigation-d">
-        <div class="logo-area">
-          <!--icono top-->
-          <img class="" src="/assets/img/principal.svg" alt="" srcset="">
-          <a href="#" class="navbar-brand logo">My<span>Luch</span></a>
-        </div>
-        <div class="mobile-nav">
-          <i class="fas fa-bars" style="color: white;"></i>
-        </div>
-        <div class="nav">
-          <ul class="nav-list">
-            <li class="items"><a href="/../index.php" id="">Home</a></li>
-            <li class="items dropdown">
-              <a href="#content-servicios" class="nav-link" data-toggle="dropdown" style="margin:0px;padding:0px;">Servicios</a>
-              <div class="dropdown-menu">
-                <a href="menu.php" class="dropdown-item">Menu</a>
-                <a href="fila-virtual.php" class="dropdown-item">Fila virtual</a>
-                <a href="donaciones.php" class="dropdown-item">Donaciones</a>
-                <a href="#"  class="dropdown-item btnAbrirModal">Calificaciones</a>
-              </div>
-            </li>
-            <li class="items"><a href="#">Contact us</a></li>
-            <li class="items" id="back-donar"><a href="donaciones.php" id="donar-text">Donar</a></li>
-            <li class="items nav-link dropdown" style="margin:0px;padding:0px;">
-              <a href="profile.php" class="nav-link" data-toggle="dropdown" >
-                <div class="img-box">
-                  <div class="info-pfp">
-                    <h5 class="texto text-pfp">
-                      <?php echo $_SESSION["NOMBRE"] . " ";
-                      echo $_SESSION["APELLIDO"];
-                      ?>
-                    </h5>
-                    <p class="texto rol-pfp">
-                      <?php echo $_SESSION['NOMBRE_ROL'] . " "; ?>
-                    </p>
+   <header class="header">
+
+      <section class="flex">
+
+         <a href="home.php" class="logo">TutoMarket</a>
+
+         <form action="search.php" method="post" class="search-form">
+            <input type="text" name="search_box" required placeholder="Buscar..." maxlength="100">
+            <button type="submit" class="fas fa-search"></button>
+         </form>
+
+         <div class="icons">
+            <div id="menu-btn" class="fas fa-bars"></div>
+            <div id="search-btn" class="fas fa-search"></div>
+            <div id="user-btn" class="fas fa-user"></div>
+            <div id="toggle-btn" class="fas fa-sun"></div>
+         </div>
+
+         <div class="profile">
+            <img src="<?php echo $_SESSION['RUTA']; ?>" class="image" alt="">
+            <h3 class="name"><?php echo $_SESSION["NOMBRE"] . " ";
+                              echo $_SESSION["APELLIDO"];
+                              ?></h3>
+            <p class="role"><?php echo $_SESSION['NOMBRE_ROL'] . " "; ?></p>
+            <a href="profile.php" class="btn">Ver perfil</a>
+            <div class="flex-btn">
+               <a href="contact.php" class="option-btn">Soporte</a>
+               <a href="../controllers/action/logout.php" class="option-btn">Cerrar sesion</a>
+            </div>
+         </div>
+
+      </section>
+
+   </header>
+
+   <div class="side-bar">
+
+      <div id="close-btn">
+         <i class="fas fa-times"></i>
+      </div>
+
+      <div class="profile">
+         <img src="/assets/img/people/pic-2.jpg" class="image" alt="">
+         <h3 class="name"><?php echo $_SESSION["NOMBRE"] . " ";
+                           echo $_SESSION["APELLIDO"];
+                           ?></h3>
+         <p class="role"><?php echo $_SESSION['NOMBRE_ROL'] . " "; ?></p>
+         <a href="profile.php" class="btn">Ver perfil</a>
+      </div>
+
+      <nav class="navbar">
+         <a href="home.php"><i class="fas fa-home"></i><span>Home</span></a>
+         <!-- <a href="about.php"><i class="fas fa-question"></i><span>Información</span></a> -->
+         <a href="courses.php"><i class="fa-solid fa-store"></i></i><span>Tienda</span></a>
+         <a href="courses.php"><i class="fas fa-graduation-cap"></i><span>Monitorias</span></a>
+         <a href="teachers.php"><i class="fas fa-chalkboard-user"></i><span>Monitores</span></a>
+
+         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 1) : ?>
+            <a href="dashboardadmin.php"><i class="fa-solid fa-user-tie"></i><span>Dashboard</span></a>
+         <?php endif; ?>
+
+         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 3) : ?>
+            <a href="myarticles.php"><i class="fas fa-newspaper"></i><span>Mis Artículos</span></a>
+         <?php endif; ?>
+
+         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 4) : ?>
+            <a href="mygroups.php"><i class="fas fa-users"></i><span>Mis Grupos</span></a>
+         <?php endif; ?>
+
+         <a href="contact.php"><i class="fas fa-headset"></i><span>Contactanos</span></a>
+      </nav>
+
+   </div>
+
+   <section class="user-profile">
+
+      <h1 class="heading">Tu perfil</h1>
+
+      <div class="info">
+
+         <div class="user">
+            <img src="<?php echo $_SESSION['RUTA']; ?>" alt="">
+            <h3><?php echo $_SESSION["NOMBRE"] . " ";
+                           echo $_SESSION["APELLIDO"];
+                           ?></h3>
+            <p><?php echo $_SESSION['NOMBRE_ROL'] . " "; ?></p>
+            <a href="update.php" class="inline-btn">Actualizar perfil</a>
+         </div>
+
+         <div class="box-container">
+
+            <div class="box">
+               <div class="flex">
+                  <i class="fas fa-bookmark"></i>
+                  <div>
+                     <span>Mis Grupos</span>
+                     <p>4</p>
                   </div>
-                  <div class="img-box-in">
-                    <img src="/assets/img/people/pic-2.jpg" alt="">
+               </div>
+               <a href="#" class="inline-btn">Administrar</a>
+            </div>
+
+            <div class="box">
+               <div class="flex">
+                  <i class="fas fa-heart"></i>
+                  <div>
+                     <span>Mis articulos</span>
+                     <p>2</p>
                   </div>
+               </div>
+               <a href="#" class="inline-btn">Administrar</a>
+            </div>
 
-                </div>
-              </a>
-              <div class="dropdown-menu">
-                <a href="profile.php" class="dropdown-item">Editar perfil</a>
-                <a href="dashboardadmin.php" class="dropdown-item">Dashboard</a>
-                <a href="/../controllers/action/logout.php" class="dropdown-item">Cerrar sesión</a>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
-  <div class="container emp-profile">
-    <form method="post">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="profile-img">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />
-            <div class="file btn btn-lg btn-primary">
-              Change Photo
-              <input type="file" name="file" />
+            <div class="box">
+               <div class="flex">
+                  <i class="fas fa-comment"></i>
+                  <div>
+                     <span>Tickets</span>
+                     <p>1
+                     </p>
+                  </div>
+               </div>
+               <a href="#" class="inline-btn">Info</a>
             </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="profile-head">
-            <h5>
-              <?php echo $_SESSION["NOMBRE"] . " ";
-              echo $_SESSION["APELLIDO"];
-              ?>
-            </h5>
-            <h6>
-              <?php echo $_SESSION["NOMBRE_ROL"]; ?>
-            </h6>
-            <p class="proile-rating">Donaciones : <span>4/5</span></p>
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-              </li>
-              
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <input id="btn-edit-profile" type="button" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="profile-work">
-            
-          </div>
-        </div>
-        <div class="col-md-8">
-          <div class="tab-content profile-tab" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Name</label>
-                </div>
-                <div class="col-md-6">
-                  <p><?php echo $_SESSION["NOMBRE"] . " " . $_SESSION["APELLIDO"]; ?></p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Email</label>
-                </div>
-                <div class="col-md-6">
-                  <p><?php echo $_SESSION["EMAIL"]; ?></p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Phone</label>
-                </div>
-                <div class="col-md-6">
-                  <p><?php echo $_SESSION["CELULAR"]; ?></p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Profession</label>
-                </div>
-                <div class="col-md-6">
-                  <p><?php echo $_SESSION["NOMBRE_PROGRAMA"]; ?></p>
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Experience</label>
-                </div>
-                <div class="col-md-6">
-                  <p>Expert</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Hourly Rate</label>
-                </div>
-                <div class="col-md-6">
-                  <p>10$/hr</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Total Projects</label>
-                </div>
-                <div class="col-md-6">
-                  <p>230</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label>English Level</label>
-                </div>
-                <div class="col-md-6">
-                  <p>Expert</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Availability</label>
-                </div>
-                <div class="col-md-6">
-                  <p>6 months</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <label>Your Bio</label><br />
-                  <p>Your detail description</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-    <form  action="" method="POST">
-      <imput type="hidden" value="1" />
-      <input id="delete" type="submit" name="eliminar_usuario" class="delete" value=" Eliminar Cuenta">
-    </form>
 
-    <div id="overlay"></div>
-    <!-- Account details card-->
-    <div class="win-float" id="win-fixed">
-      <div class="card mb-4">
-        <div class="card-header">Account Details</div>
-        <div class="card-body">
-          <form action="../controllers/action/updateinfo.php" method="post">
-            <!-- Form Group (username)-->
-            <div class="mb-3">
-              <label class="small mb-1" for="inputUsername">Username (Como tu nombre aparecerá para las otras personas del sitio)</label>
-              <input class="form-control" id="inputUsername" name="nuevoUsername" type="text" placeholder="Enter your username" value="username">
-            </div>
-            <!-- Form Row-->
-            <div class="row gx-3 mb-3">
-              <!-- Form Group (first name)-->
-              <div class="col-md-6">
-                <label class="small mb-1" for="inputFirstName">Nombres</label>
-                <input class="form-control" id="inputFirstName" name="nuevoNombre" type="text" placeholder="Escribe tu nombre" value="<?php echo $_SESSION["NOMBRE"]; ?>">
-              </div>
-              <!-- Form Group (last name)-->
-              <div class="col-md-6">
-                <label class="small mb-1" for="inputLastName">Apellidos</label>
-                <input class="form-control" id="inputLastName" name="nuevoApellido" type="text" placeholder="Escribe tu apellido" value="<?php echo $_SESSION["APELLIDO"]; ?>">
-              </div>
-            </div>
-            <!-- Form Group (email address)-->
-            <div class="mb-3">
-              <label class="small mb-1" for="inputEmailAddress">Email address</label>
-              <input class="form-control" id="inputEmailAddress" name="nuevoEmail" type="email" placeholder="Ingresa tu correo electronico" value="<?php echo $_SESSION["EMAIL"]; ?>">
-            </div>
-            <!-- Form Row-->
-            <div class="row gx-3 mb-3">
-              <!-- Form Group (phone number)-->
-              <div class="col-md-6">
-                <label class="small mb-1" for="inputPhone">Phone number</label>
-                <input class="form-control" id="inputPhone" name="nuevoTelefono" type="tel" placeholder="Enter your phone number" value="<?php echo $_SESSION["CELULAR"]; ?>">
-              </div>
-            </div>
-             <!-- Form Row        -->
-             <div class="row gx-3 mb-3">
-              <!-- Form Group (organization name)-->
-              <div class="col-md-6">
-                <label class="small mb-1" for="inputOrgName">Cambiar la contraseña(Opcional)</label>
-                <input class="form-control" id="inputOrgName" name="nuevaContraseña" type="password" placeholder="Ingresa una nueva contraseña"  value="">
-              </div>
-              <!-- Form Group (location)-->
-              <div class="col-md-6">
-                <label class="small mb-1" for="inputLocation"></label>
-                <input class="form-control" id="inputLocation" name="confirmarContraseña" type="password" placeholder="Confirma la nueva contraseña" value="">
-              </div>
-            </div>
-            <!-- Save changes button-->
-            <input class="btn btn-primary" type="submit" name="submitActualizar" value="Actualizar" style="border:none;">
-          </form>
-        </div>
+         </div>
       </div>
-    </div>
 
-  </div>
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="js/profile.js"></script>
-  <script src="js/sweetalert2.all.min.js"></script>
+   </section>
+
+
+
+
+
+   <!-- custom js file link  -->
+   <script src="js/home.js"></script>
+
+
 </body>
 
 </html>

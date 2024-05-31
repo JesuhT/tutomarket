@@ -29,6 +29,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
    <!-- custom css file link  -->
    <link rel="stylesheet" href="css/home.css">
 
+
 </head>
 
 <body>
@@ -37,10 +38,10 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
       <section class="flex">
 
-         <a href="home.php" class="logo">Educa.</a>
+         <a href="home.php" class="logo">TutoMarket</a>
 
          <form action="search.php" method="post" class="search-form">
-            <input type="text" name="search_box" required placeholder="search courses..." maxlength="100">
+            <input type="text" name="search_box" required placeholder="Buscar..." maxlength="100">
             <button type="submit" class="fas fa-search"></button>
          </form>
 
@@ -52,13 +53,15 @@ if (!isset($_SESSION['ID_USUARIO'])) {
          </div>
 
          <div class="profile">
-            <img src="images/pic-1.jpg" class="image" alt="">
-            <h3 class="name">shaikh anas</h3>
-            <p class="role">studen</p>
-            <a href="profile.php" class="btn">view profile</a>
+            <img src="<?php echo $_SESSION['RUTA']; ?>" class="image" alt="">
+            <h3 class="name"><?php echo $_SESSION["NOMBRE"] . " ";
+                              echo $_SESSION["APELLIDO"];
+                              ?></h3>
+            <p class="role"><?php echo $_SESSION['NOMBRE_ROL'] . " "; ?></p>
+            <a href="profile.php" class="btn">Ver perfil</a>
             <div class="flex-btn">
-               <a href="login.php" class="option-btn">login</a>
-               <a href="register.php" class="option-btn">register</a>
+               <a href="contact.php" class="option-btn">Soporte</a>
+               <a href="../controllers/action/logout.php" class="option-btn">Cerrar sesion</a>
             </div>
          </div>
 
@@ -74,73 +77,95 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
       <div class="profile">
          <img src="/assets/img/people/pic-2.jpg" class="image" alt="">
-         <h3 class="name">
-            <?php echo $_SESSION["NOMBRE"] . " ";
-                        echo $_SESSION["APELLIDO"];
-                        ?>
-         </h3>
-         <p class="role">
-            <?php echo $_SESSION['NOMBRE_ROL'] . " "; ?>
-         </p>
-         <a href="profile.php" class="btn">view profile</a>
+         <h3 class="name"><?php echo $_SESSION["NOMBRE"] . " ";
+                           echo $_SESSION["APELLIDO"];
+                           ?></h3>
+         <p class="role"><?php echo $_SESSION['NOMBRE_ROL'] . " "; ?></p>
+         <a href="profile.php" class="btn">Ver perfil</a>
       </div>
 
       <nav class="navbar">
-         <a href="home.php"><i class="fas fa-home"></i><span>home</span></a>
+         <a href="home.php"><i class="fas fa-home"></i><span>Home</span></a>
+         <!-- <a href="about.php"><i class="fas fa-question"></i><span>Información</span></a> -->
          <a href="courses.php"><i class="fa-solid fa-store"></i></i><span>Tienda</span></a>
          <a href="courses.php"><i class="fas fa-graduation-cap"></i><span>Monitorias</span></a>
          <a href="teachers.php"><i class="fas fa-chalkboard-user"></i><span>Monitores</span></a>
-         <a href="dashboardadmin.php"><i class="fa-solid fa-user-tie"></i><span>Dashboard</span></a>
-         <a href="dashboardadmin.php"><i class="fa-solid fa-user-group"></i><span>Mis grupos</span></a>
-         <a href="dashboardadmin.php"><i class="fa-solid fa-hand-holding-dollar"></i><span>Mis articulos</span></a>
+
+         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 1) : ?>
+            <a href="dashboardadmin.php"><i class="fa-solid fa-user-tie"></i><span>Dashboard</span></a>
+         <?php endif; ?>
+
+         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 3) : ?>
+            <a href="myarticles.php"><i class="fas fa-newspaper"></i><span>Mis Artículos</span></a>
+         <?php endif; ?>
+
+         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 4) : ?>
+            <a href="mygroups.php"><i class="fas fa-users"></i><span>Mis Grupos</span></a>
+         <?php endif; ?>
+
          <a href="contact.php"><i class="fas fa-headset"></i><span>Contactanos</span></a>
       </nav>
 
    </div>
 
    <section class="form-container">
+      <form id="formLogin" action="/../controllers/action/updateProfile.php" method="post" enctype="multipart/form-data">
+         <h3>Update Profile</h3>
 
-      <form action="" method="post" enctype="multipart/form-data">
-         <h3>update profile</h3>
-         <p>update name</p>
-         <input type="text" name="name" placeholder="shaikh anas" maxlength="50" class="box">
-         <p>update email</p>
-         <input type="email" name="email" placeholder="shaikh@gmail.come" maxlength="50" class="box">
-         <p>previous password</p>
-         <input type="password" name="old_pass" placeholder="enter your old password" maxlength="20" class="box">
-         <p>new password</p>
-         <input type="password" name="new_pass" placeholder="enter your old password" maxlength="20" class="box">
-         <p>confirm password</p>
-         <input type="password" name="c_pass" placeholder="confirm your new password" maxlength="20" class="box">
-         <p>update pic</p>
-         <input type="file" accept="image/*" class="box">
-         <input type="submit" value="update profile" name="submit" class="btn">
+         <input data-id="<?php echo $_SESSION["ID_USUARIO"]; ?>" type="hidden" class="idUsuario box" name="idUsuario" readonly>
+
+         <p>Update Name</p>
+         <input type="text" name="nombres" placeholder="First Name" maxlength="50" class="box" required>
+         <input type="text" name="apellidos" placeholder="Last Name" maxlength="50" class="box" required>
+
+         <p>Update Email</p>
+         <input type="email" name="email" placeholder="Email" maxlength="50" class="box" required>
+
+         <p>Student Code</p>
+         <input type="number" name="codigo" placeholder="Student Code" class="box" required>
+
+         <p>Phone</p>
+         <input type="number" name="celular" placeholder="Phone" class="box" required>
+
+         <p>Biography</p>
+         <input type="text" name="biografia" placeholder="Biography" class="box">
+
+         <p>Program</p>
+         <select style="font-size: 18px; height: max-content;" class="form-control programaSelect box" name="programa" required>
+            <option disabled selected>Programa</option>
+            <!-- PHP: Insertar opciones del programa aquí -->
+         </select>
+
+         <p>Update Password</p>
+         <input type="hidden" name="old_pass" placeholder="Enter your old password" maxlength="20" class="box">
+         <input type="password" name="new_pass" placeholder="Enter your new password" maxlength="20" class="box">
+         <input type="password" name="c_pass" placeholder="Confirm your new password" maxlength="20" class="box">
+
+         <p>Update Picture</p>
+         <input type="file" name="image" accept="image/*" class="box">
+         <img id="currentImage" src="<?php echo $_SESSION["RUTA"]; ?>" alt="Current Image" style="max-width: 100px; display: block; margin-top: 10px;">
+
+         <input type="submit" value="Update Profile" name="submit" class="btn">
       </form>
-
    </section>
 
+   <script>
+      document.querySelector('input[name="image"]').addEventListener('change', function(event) {
+         const file = event.target.files[0];
+         const preview = document.getElementById('currentImage');
+         preview.src = URL.createObjectURL(file);
+      });
+   </script>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-   <footer class="footer">
-
-      &copy; copyright @ 2022 by <span>mr. web designer</span> | all rights reserved!
-
-   </footer>
 
    <!-- custom js file link  -->
    <script src="js/home.js"></script>
+   <script src="js/sweetalert2.all.min.js"></script>
+   <script src="js/jquery-3.7.1.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+   <script src="js/cargarProgramas.js"></script>
+   <script src="js/editar-home.js"></script>
 
 
 </body>

@@ -24,7 +24,8 @@ if (isset($_POST['email']) && isset($_POST['pswd'])) {
         $_SESSION['ID_PROGRAMA'] = $usuario->getId_Programa();
         $_SESSION['ID_ROL'] = $usuario->getId_Rol();
         $_SESSION['BIOGRAFIA'] = $usuario->getBiografia();
-
+        $_SESSION['ID_ESTADO'] = $usuario->getId_Estado();
+        $_SESSION['RUTA'] = $usuario->getRuta_Imagen();
         $programa = buscarProgramaPorId($usuario->getId_Programa());
         $_SESSION['NOMBRE_PROGRAMA'] = $programa->getNombre();
         

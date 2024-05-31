@@ -12,7 +12,6 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +19,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>contact us</title>
+   <title>login</title>
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
@@ -79,80 +78,54 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                            echo $_SESSION["APELLIDO"];
                            ?></h3>
          <p class="role"><?php echo $_SESSION['NOMBRE_ROL'] . " "; ?></p>
-         <a href="profile.php" class="btn">Ver perfil</a>
+         <a href="profile.php" class="btn">view profile</a>
       </div>
 
       <nav class="navbar">
-         <a href="home.php"><i class="fas fa-home"></i><span>Home</span></a>
-         <!-- <a href="about.php"><i class="fas fa-question"></i><span>Información</span></a> -->
+         <a href="home.php"><i class="fas fa-home"></i><span>home</span></a>
          <a href="courses.php"><i class="fa-solid fa-store"></i></i><span>Tienda</span></a>
          <a href="courses.php"><i class="fas fa-graduation-cap"></i><span>Monitorias</span></a>
          <a href="teachers.php"><i class="fas fa-chalkboard-user"></i><span>Monitores</span></a>
-
-         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 1) : ?>
-            <a href="dashboardadmin.php"><i class="fa-solid fa-user-tie"></i><span>Dashboard</span></a>
-         <?php endif; ?>
-
-         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 3) : ?>
-            <a href="myarticles.php"><i class="fas fa-newspaper"></i><span>Mis Artículos</span></a>
-         <?php endif; ?>
-
-         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 4) : ?>
-            <a href="mygroups.php"><i class="fas fa-users"></i><span>Mis Grupos</span></a>
-         <?php endif; ?>
-
+         <a href="dashboardadmin.php"><i class="fa-solid fa-user-tie"></i><span>Dashboard</span></a>
+         <a href="dashboardadmin.php"><i class="fa-solid fa-user-group"></i><span>Mis grupos</span></a>
+         <a href="dashboardadmin.php"><i class="fa-solid fa-hand-holding-dollar"></i><span>Mis articulos</span></a>
          <a href="contact.php"><i class="fas fa-headset"></i><span>Contactanos</span></a>
       </nav>
 
    </div>
 
-   <section class="contact">
+   <section class="form-container">
 
-      <div class="row">
-
-         <div class="image">
-            <img src="images/contact-img.svg" alt="">
-         </div>
-
-         <form action="" method="post">
-            <h3>Cuentanos tu problema</h3>
-            <input type="text" placeholder="Coloca tu nombre completo" name="name" required maxlength="50" class="box">
-            <input type="email" placeholder="Coloca tu email" name="email" required maxlength="50" class="box">
-            <input type="number" placeholder="Ingresa tu número de celular" name="number" required maxlength="50" class="box">
-            <textarea name="msg" class="box" placeholder="Describe a detalle tu problema" required maxlength="1000" cols="30" rows="10"></textarea>
-            <input type="submit" value="Enviar ticket" class="inline-btn" name="submit">
-         </form>
-
-      </div>
-
-      <div class="box-container">
-
-         <div class="box">
-            <i class="fas fa-phone"></i>
-            <h3>Numero de contacto</h3>
-            <a href="tel:1234567890">3149292992</a>
-            <a href="tel:1112223333">3209498385</a>
-         </div>
-
-         <div class="box">
-            <i class="fas fa-envelope"></i>
-            <h3>Correo de soporte</h3>
-            <a href="mailto:shaikhanas@gmail.com">soporte@tutomarket.com</a>
-            <a href="mailto:anasbhai@gmail.com">serviciocliente@tutomarket.com</a>
-         </div>
-
-         <div class="box">
-            <i class="fas fa-map-marker-alt"></i>
-            <h3>Redes sociales</h3>
-            <a href="#">Instagran: @Tutomarket</a>
-         </div>
-
-      </div>
+      <form action="" method="post" enctype="multipart/form-data">
+         <h3>login now</h3>
+         <p>your email <span>*</span></p>
+         <input type="email" name="email" placeholder="enter your email" required maxlength="50" class="box">
+         <p>your password <span>*</span></p>
+         <input type="password" name="pass" placeholder="enter your password" required maxlength="20" class="box">
+         <input type="submit" value="login new" name="submit" class="btn">
+      </form>
 
    </section>
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+   <footer class="footer">
+
+      &copy; copyright @ 2022 by <span>mr. web designer</span> | all rights reserved!
+
+   </footer>
 
    <!-- custom js file link  -->
    <script src="js/home.js"></script>

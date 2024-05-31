@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 require_once(__DIR__ . "/../controllers/actionchart/data.php");
 if (!isset($_SESSION['ID_USUARIO'])) {
@@ -104,16 +107,16 @@ if ($_SESSION["ID_ROL"] === 4) {
 									<i class='bx bx-cart-add'></i>
 									<span class="nav__name">Articulos</span>
 								</a>
-								
+
 								<a href="#" class="nav__link" id="config-nav">
 									<ion-icon name="settings-outline" class="nav__icon"></ion-icon>
 									<span class="nav__name">Configuración</span>
 								</a>
 							</div>
 						</div>
-						<a href="#" class="nav__link">
+						<a href="../controllers/action/logout.php" class="nav__link">
 							<ion-icon name="log-out-outline" class="nav__icon"></ion-icon>
-							<span class="nav__name">Log Out</span>
+							<span class="nav__name">Cerrar sesion</span>
 						</a>
 					</nav>
 				</div>
@@ -123,71 +126,36 @@ if ($_SESSION["ID_ROL"] === 4) {
 		<section id="9" class="dashboard">
 
 			<div class="row nav-bar colornav">
-				<div class="col-2 col-md-1 col-lg-1 order-2 order-md-1 align-self-center">
-				</div>
-
-				<div class="col-md-5 col-lg-3 order-3 order-md-2">
-					<div class="xp-searchbar">
-						<form>
-							<div class="input-group">
-								<input type="search" class="form-control" placeholder="Search">
-								<div class="input-group-append">
-									<button class="btn" type="submit" id="button-addon2">Go
-									</button>
-								</div>
-							</div>
-						</form>
+				<div class="action">
+					<div class="profile" onclick="menuToggle();">
+						<img src="<?php echo $_SESSION['RUTA'];?>" />
+					</div>
+					<div class="menu">
+						<h3><?php echo $_SESSION["NOMBRE"] . " ";
+                              echo $_SESSION["APELLIDO"];?><br />
+							  <span><?php echo $_SESSION['NOMBRE_ROL'] . " "; ?></span></h3>
+						<ul>
+							<li>
+								<a href="profile.php"><i class='bx bxs-user-circle' style="padding-right: 10px; font-size: 20px;"></i>Ver perfil</a>
+							</li>
+							<li>
+								<a href="update.php"><i class='bx bxs-edit' style="padding-right: 10px; font-size: 20px;"></i>Editar perfil</a>
+							</li>
+							<li>
+								<a href="#"><i class='bx bxs-envelope'style="padding-right: 10px; font-size: 20px;"></i>Mensajes</a>
+							</li>
+							<li>
+								<a href="../controllers/action/logout.php"><i class='bx bx-log-out' style="padding-right: 10px; font-size: 20px;"></i>Logout</a>
+							</li>
+						</ul>
 					</div>
 				</div>
-
-
-				<div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
-					<div class="xp-profilebar text-right">
-						<nav class="navbar p-0">
-							<ul class="nav navbar-nav flex-row ml-auto">
-								<li class="dropdown nav-item active">
-									<a class="nav-link" href="#" data-toggle="dropdown">
-										<span class="material-icons"><i class='bx bxs-bell'></i></span>
-										<span class="notification">4</span>
-									</a>
-									<ul class="dropdown-menu">
-										<li><a href="#">You Have 4 New Messages</a></li>
-										<li><a href="#">You Have 4 New Messages</a></li>
-										<li><a href="#">You Have 4 New Messages</a></li>
-										<li><a href="#">You Have 4 New Messages</a></li>
-									</ul>
-								</li>
-
-								<li class="nav-item">
-									<a class="nav-link" href="#">
-										<span class="material-icons"><i class='bx bxs-conversation'></i></span>
-									</a>
-								</li>
-
-								<li class="dropdown nav-item">
-									<a class="nav-link" href="#" data-toggle="dropdown">
-										<img src="/assets/img/chef1.png" style="width:40px; border-radius:50%;" />
-										<span class="xp-user-live"></span>
-									</a>
-									<ul class="dropdown-menu small-menu">
-										<li><a href="#">
-												<span class="material-icons">person_outline</span>
-												Profile
-											</a></li>
-										<li><a href="#">
-												<span class="material-icons">settings</span>
-												Settings
-											</a></li>
-										<li><a href="#">
-												<span class="material-icons">logout</span>
-												Logout
-											</a></li>
-									</ul>
-								</li>
-							</ul>
-						</nav>
-					</div>
-				</div>
+				<script>
+					function menuToggle() {
+						const toggleMenu = document.querySelector(".menu");
+						toggleMenu.classList.toggle("active");
+					}
+				</script>
 			</div>
 
 
@@ -262,7 +230,7 @@ if ($_SESSION["ID_ROL"] === 4) {
 								<form id="registroForm" action="/../controllers/actionadmin/registrarUsuario.php" method="post">
 									<div class="modal-body">
 										<div class="container-fluid">
-											
+
 											<div style="padding:7px 0;" class="justify-content-center row">
 												<div class="col-md-8"><input placeholder="Nombres" type="text" class="form-control" name="nombres">
 												</div>
@@ -390,7 +358,8 @@ if ($_SESSION["ID_ROL"] === 4) {
 														<option disabled selected>Elegir Estado</option>
 														<option value="1">Activo</option>
 														<option value="2">Desabilitado</option>
-														<option value="3">Bloqueado</option>													</select>
+														<option value="3">Bloqueado</option>
+													</select>
 												</div>
 											</div>
 											<input hidden type="number" class="form-control" name="idUsuario">
@@ -637,7 +606,7 @@ if ($_SESSION["ID_ROL"] === 4) {
 
 
 	</main>
-	
+
 	<script src="js/jquery-3.3.1.slim.min.js"></script>
 	<script>
 		$(document).ready(function() {
@@ -678,7 +647,7 @@ if ($_SESSION["ID_ROL"] === 4) {
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/adminfront.js"></script>
 	<script src="js/jquery-3.7.1.min.js"></script>
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 	<script src="js/sweetalert2.all.min.js"></script>
 	<script src="js/administrar_usuario.js"></script>
 	<script src="js/administrar_grupos.js"></script>

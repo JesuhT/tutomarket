@@ -96,31 +96,36 @@ class AlmuerzoDAO
         }
         return $gruposArray;
     }
-    
-    function leerGruposHome() {
+
+    function leerGruposHome()
+    {
         $data_source = new DataSource();
-        $sql = "SELECT gm.Id_Monitoria, gm.Id_Monitor, gm.Materia, gm.Fecha, rg.ruta_imagen 
-                FROM Grupo_Monitoria gm
-                LEFT JOIN Ruta_Grupo rg ON gm.Id_Monitoria = rg.Id_Grupo";
+        $sql = "SELECT gm.Id_Monitoria, gm.Id_Monitor, gm.Materia, gm.Fecha, rg.ruta_imagen, p.Nombre
+        FROM Grupo_Monitoria gm
+        LEFT JOIN Ruta_Grupo rg ON gm.Id_Monitoria = rg.Id_Grupo
+        JOIN Persona p ON gm.Id_Monitor = p.Id_Persona";
+
+
         $data_table = $data_source->ejecutarConsulta($sql);
-    
+
         if (!$data_table) {
             return array();
         }
-    
+
         $grupos = array();
-    
+
         foreach ($data_table as $fila) {
             $grupo = array(
                 'Id_Monitoria' => $fila["Id_Monitoria"],
                 'Id_Monitor' => $fila["Id_Monitor"],
                 'Materia' => $fila["Materia"],
                 'Fecha' => $fila["Fecha"],
-                'ruta_imagen' => $fila["ruta_imagen"]
+                'ruta_imagen' => $fila["ruta_imagen"],
+                'Nombre_Monitor' => $fila["Nombre"]
             );
             $grupos[] = $grupo;
         }
-    
+
         return $grupos;
     }
 
@@ -170,6 +175,36 @@ class AlmuerzoDAO
             'Fecha' => $fila["Fecha"]
         ];
     }
+    public function buscarGrupoPorIdPlay($Id_Monitoria)
+    {
+        $data_source = new DataSource();
+        $data_table = $data_source->ejecutarConsulta(
+            "SELECT gm.Id_Monitoria, gm.Id_Monitor, gm.Materia, gm.Fecha, gm.Descripcion, r.ruta_imagen, p.Nombre AS Nombre_Monitor
+        FROM Grupo_Monitoria gm
+        LEFT JOIN Persona p ON gm.Id_Monitor = p.Id_Persona
+        JOIN Ruta_Grupo r ON gm.Id_Monitoria = r.Id_Grupo
+        WHERE gm.Id_Monitoria = :Id_Monitoria",
+            array(':Id_Monitoria' => $Id_Monitoria)
+        );
+
+        if (!$data_table || empty($data_table)) {
+            return null;
+        }
+
+        $fila = $data_table[0];
+
+        return [
+            'Id_Monitoria' => $fila["Id_Monitoria"],
+            'Id_Monitor' => $fila["Id_Monitor"],
+            'Materia' => $fila["Materia"],
+            'Fecha' => $fila["Fecha"],
+            'Descripcion' => $fila["Descripcion"],
+            'Nombre_Monitor' => $fila["Nombre_Monitor"],
+            'ruta_imagen' => $fila["ruta_imagen"],
+
+        ];
+    }
+
 
     public function borrarGrupo($ID)
     {

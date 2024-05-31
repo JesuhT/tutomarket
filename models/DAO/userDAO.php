@@ -30,7 +30,7 @@ class UsuarioDAO
                 $data["Id_Programa"],
                 $data["Id_Estado"],
                 $data["Biografia"],
-                null
+                $data["ruta_imagen"],
             );
             return $usuario;
         }
@@ -66,7 +66,7 @@ class UsuarioDAO
                 $data["Id_Programa"],
                 $data["Id_Estado"],
                 $data["Biografia"],
-                null
+                $data["ruta_imagen"],
             );
             $usuarioArray = array(
                 'Id_Persona' => $usuario->getId_Persona(),
@@ -108,7 +108,7 @@ class UsuarioDAO
                 $data_table[$indice]["Id_Programa"],
                 $data_table[$indice]["Id_Estado"],
                 $data_table[$indice]["Biografia"],
-                null
+                $data_table[$indice]["ruta_imagen"],
             );
 
             $programa = buscarProgramaPorId($persona->getId_Programa());
@@ -181,20 +181,6 @@ class UsuarioDAO
         return $resultado;
     }
 
-
-
-
-    public function modificarContraseña(Usuario $user, $newPassword)
-    {
-        $data_source = new DataSource();
-        $sql = "UPDATE Usuario SET Contrasena = :Contrasena WHERE idUser = :idUser";
-        $resultado = $data_source->ejecutarActualizacion($sql, array(
-            ':Contrasena' => $newPassword,
-            ':idUser' => $user->getID_User()
-        ));
-
-        return $resultado;
-    }
 
     public function modificarPersona(Persona $persona)
     {
@@ -322,6 +308,50 @@ class UsuarioDAO
             'ID_rol' => $fila["ID_rol"],
             'NombrePrograma' => $fila["NombrePrograma"]
         ];
+    }
+
+    function actualizarPersona($persona)
+    {
+        $data_source = new DataSource();
+        $sql = "UPDATE Persona SET
+                    Nombre = :Nombre,
+                    Apellido = :Apellido,
+                    Correo_Institucional = :Correo_Institucional,
+                    Codigo_Estudiantil = :Codigo_Estudiantil,
+                    Celular = :Celular,
+                    Id_Rol = :Id_Rol,
+                    Id_Programa = :Id_Programa,
+                    Id_Estado = :Id_Estado,
+                    Biografia = :Biografia,
+                    ruta_imagen = :ruta_imagen
+                WHERE Id_Persona = :Id_Persona";
+
+        $params = array(
+            ':Nombre' => $persona->getNombre(),
+            ':Apellido' => $persona->getApellido(),
+            ':Correo_Institucional' => $persona->getCorreo_Institucional(),
+            ':Codigo_Estudiantil' => $persona->getCodigo_Estudiantil(),
+            ':Celular' => $persona->getCelular(),
+            ':Id_Rol' => $persona->getId_Rol(),
+            ':Id_Programa' => $persona->getId_Programa(),
+            ':Id_Estado' => $persona->getId_Estado(),
+            ':Biografia' => $persona->getBiografia(),
+            ':ruta_imagen' => $persona->getRuta_Imagen(),
+            ':Id_Persona' => $persona->getId_Persona()
+        );
+
+        return $data_source->ejecutarActualizacion($sql, $params);
+    }
+
+    function actualizarContrasena($idPersona, $new_pass)
+    {
+        $data_source = new DataSource();
+        $sql = "UPDATE Usuario SET Password = :new_pass WHERE id_Usuario = :idUsuario";
+        $params = array(
+            ':new_pass' => $new_pass,
+            ':idUsuario' => $idPersona
+        );
+        return $data_source->ejecutarActualizacion($sql, $params);
     }
     function esAdministrador($idUsuario)
     {

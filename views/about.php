@@ -12,7 +12,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
 ?>
 
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -35,10 +35,10 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
       <section class="flex">
 
-         <a href="home.php" class="logo">Educa.</a>
+         <a href="home.php" class="logo">TutoMarket</a>
 
          <form action="search.php" method="post" class="search-form">
-            <input type="text" name="search_box" required placeholder="search courses..." maxlength="100">
+            <input type="text" name="search_box" required placeholder="Buscar..." maxlength="100">
             <button type="submit" class="fas fa-search"></button>
          </form>
 
@@ -50,13 +50,15 @@ if (!isset($_SESSION['ID_USUARIO'])) {
          </div>
 
          <div class="profile">
-            <img src="images/pic-1.jpg" class="image" alt="">
-            <h3 class="name">shaikh anas</h3>
-            <p class="role">studen</p>
-            <a href="profile.php" class="btn">view profile</a>
+            <img src="<?php echo $_SESSION['RUTA']; ?>" class="image" alt="">
+            <h3 class="name"><?php echo $_SESSION["NOMBRE"] . " ";
+                              echo $_SESSION["APELLIDO"];
+                              ?></h3>
+            <p class="role"><?php echo $_SESSION['NOMBRE_ROL'] . " "; ?></p>
+            <a href="profile.php" class="btn">Ver perfil</a>
             <div class="flex-btn">
-               <a href="login.php" class="option-btn">login</a>
-               <a href="register.php" class="option-btn">register</a>
+               <a href="contact.php" class="option-btn">Soporte</a>
+               <a href="../controllers/action/logout.php" class="option-btn">Cerrar sesion</a>
             </div>
          </div>
 
@@ -76,17 +78,28 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                            echo $_SESSION["APELLIDO"];
                            ?></h3>
          <p class="role"><?php echo $_SESSION['NOMBRE_ROL'] . " "; ?></p>
-         <a href="profile.php" class="btn">view profile</a>
+         <a href="profile.php" class="btn">Ver perfil</a>
       </div>
 
       <nav class="navbar">
-         <a href="home.php"><i class="fas fa-home"></i><span>home</span></a>
+         <a href="home.php"><i class="fas fa-home"></i><span>Home</span></a>
+         <!-- <a href="about.php"><i class="fas fa-question"></i><span>Información</span></a> -->
          <a href="courses.php"><i class="fa-solid fa-store"></i></i><span>Tienda</span></a>
          <a href="courses.php"><i class="fas fa-graduation-cap"></i><span>Monitorias</span></a>
          <a href="teachers.php"><i class="fas fa-chalkboard-user"></i><span>Monitores</span></a>
-         <a href="dashboardadmin.php"><i class="fa-solid fa-user-tie"></i><span>Dashboard</span></a>
-         <a href="dashboardadmin.php"><i class="fa-solid fa-user-group"></i><span>Mis grupos</span></a>
-         <a href="dashboardadmin.php"><i class="fa-solid fa-hand-holding-dollar"></i><span>Mis articulos</span></a>
+
+         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 1) : ?>
+            <a href="dashboardadmin.php"><i class="fa-solid fa-user-tie"></i><span>Dashboard</span></a>
+         <?php endif; ?>
+
+         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 3) : ?>
+            <a href="myarticles.php"><i class="fas fa-newspaper"></i><span>Mis Artículos</span></a>
+         <?php endif; ?>
+
+         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 4) : ?>
+            <a href="mygroups.php"><i class="fas fa-users"></i><span>Mis Grupos</span></a>
+         <?php endif; ?>
+
          <a href="contact.php"><i class="fas fa-headset"></i><span>Contactanos</span></a>
       </nav>
 
@@ -260,21 +273,6 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-   <footer class="footer">
-
-      &copy; copyright @ 2022 by <span>mr. web designer</span> | all rights reserved!
-
-   </footer>
 
    <!-- custom js file link  -->
    <script src="js/home.js"></script>

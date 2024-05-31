@@ -38,7 +38,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
          <a href="home.php" class="logo">TutoMarket</a>
 
          <form action="search.php" method="post" class="search-form">
-            <input type="text" name="search_box" required placeholder="search courses..." maxlength="100">
+            <input type="text" name="search_box" required placeholder="Buscar..." maxlength="100">
             <button type="submit" class="fas fa-search"></button>
          </form>
 
@@ -50,14 +50,14 @@ if (!isset($_SESSION['ID_USUARIO'])) {
          </div>
 
          <div class="profile">
-            <img src="images/pic-1.jpg" class="image" alt="">
+            <img src="<?php echo $_SESSION['RUTA']; ?>" class="image" alt="">
             <h3 class="name"><?php echo $_SESSION["NOMBRE"] . " ";
                               echo $_SESSION["APELLIDO"];
                               ?></h3>
             <p class="role"><?php echo $_SESSION['NOMBRE_ROL'] . " "; ?></p>
             <a href="profile.php" class="btn">Ver perfil</a>
             <div class="flex-btn">
-               <a href="login.php" class="option-btn"></a>
+               <a href="contact.php" class="option-btn">Soporte</a>
                <a href="../controllers/action/logout.php" class="option-btn">Cerrar sesion</a>
             </div>
          </div>
@@ -83,7 +83,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
       <nav class="navbar">
          <a href="home.php"><i class="fas fa-home"></i><span>Home</span></a>
-         <a href="about.php"><i class="fas fa-question"></i><span>Información</span></a>
+         <!-- <a href="about.php"><i class="fas fa-question"></i><span>Información</span></a> -->
          <a href="courses.php"><i class="fa-solid fa-store"></i></i><span>Tienda</span></a>
          <a href="courses.php"><i class="fas fa-graduation-cap"></i><span>Monitorias</span></a>
          <a href="teachers.php"><i class="fas fa-chalkboard-user"></i><span>Monitores</span></a>
@@ -107,18 +107,18 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
    <section class="home-grid">
 
-      <h1 class="heading">quick options</h1>
+      <h1 class="heading">Acceso rapido</h1>
 
       <div class="box-container">
 
          <div class="box">
-            <h3 class="title">likes and comments</h3>
-            <p class="likes">total likes : <span>25</span></p>
-            <a href="#" class="inline-btn">view likes</a>
-            <p class="likes">total comments : <span>12</span></p>
-            <a href="#" class="inline-btn">view comments</a>
-            <p class="likes">saved playlists : <span>4</span></p>
-            <a href="#" class="inline-btn">view playlists</a>
+            <h3 class="title">Administrar</h3>
+            <p class="likes">Mis articulos : <span>4</span></p>
+            <a href="#" class="inline-btn">Ver articulos</a>
+            <p class="likes">Mis grupos : <span>3</span></p>
+            <a href="#" class="inline-btn">Ver grupos</a>
+            <p class="likes">Tickets : <span>1</span></p>
+            <a href="#" class="inline-btn">Ver tickets</a>
          </div>
 
          <div class="box">
@@ -269,25 +269,6 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
    </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   <footer class="footer">
-
-      &copy; copyright @ 2022 by <span>mr. web designer</span> | all rights reserved!
-
-   </footer>
 
    <!-- custom js file link  -->
    <script src="js/jquery-3.7.1.min.js"></script>

@@ -112,3 +112,19 @@ function obtenerCantidadDonaciones()
     $usuarios = $dao->obtenerCantidadDonaciones();
     return $usuarios;
 }
+function actualizarPersona($usuario)
+{
+    require_once(__DIR__ . "/../../models/DAO/userDAO.php");
+    $dao = new UsuarioDAO();
+    $usuarios = $dao->actualizarPersona($usuario);
+    return $usuarios;
+}
+function actualizarContrasena($idUsuario, $new_pass)
+{
+    require_once(__DIR__ . "/../../models/DAO/userDAO.php");
+    $dao = new UsuarioDAO();
+    $usuarios = $dao->actualizarContrasena($idUsuario, $new_pass);
+    return $usuarios;
+}
+
+
