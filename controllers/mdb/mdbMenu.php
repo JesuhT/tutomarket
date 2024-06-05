@@ -6,11 +6,23 @@ function leerArticulos() {
     return $almuerzos;
 }
 
+function leerArticulosHome() {
+    $dao = new AlmuerzoEnMenuDAO();
+    $almuerzos = $dao->leerArticulosHome();
+    return $almuerzos;
+}
+
 function modificarArticulo($almuerzo) {
     $dao = new AlmuerzoEnMenuDAO();
     $resultado = $dao->modificarArticulo($almuerzo);
     return $resultado;
 }
+function buscarArticuloPorIdHome($idarticulo) {
+    $dao = new AlmuerzoEnMenuDAO();
+    $resultado = $dao->buscarArticuloPorIdHome($idarticulo);
+    return $resultado;
+}
+
 function buscarArticuloPorId($idarticulo) {
     $dao = new AlmuerzoEnMenuDAO();
     $resultado = $dao->buscarArticuloPorId($idarticulo);

@@ -109,6 +109,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
    <section class="courses">
 
       <h1 class="heading">Grupos de Monitoria</h1>
+
       <div id="Grupos-box" class="box-container">
 
          <div class="box">
@@ -266,7 +267,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
    <!-- custom js file link  -->
    <script src="js/jquery-3.7.1.min.js"></script>
    <script src="js/home.js"></script>
-   <script src="js/home_grupos.js"></script>
+   <script src="js/home_shop.js"></script>
 
 
 </body>

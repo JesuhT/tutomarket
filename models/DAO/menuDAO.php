@@ -34,6 +34,41 @@ class AlmuerzoEnMenuDAO
         return $articulos;
     }
 
+    public function leerArticulosHome()
+    {
+        $data_source = new DataSource();
+        $data_table = $data_source->ejecutarConsulta(
+            "SELECT a.Id_Articulo, a.Nombre AS articulo, a.Descripcion, a.Precio, a.Id_Vendedor, a.Fecha_Publicacion, 
+                    p.Nombre AS vendedor, a.ruta_imagen, p.ruta_imagen AS ruta_persona
+            FROM Articulo a
+            JOIN Persona p ON a.Id_Vendedor = p.Id_Persona",
+            null
+        );
+
+        if (!$data_table) {
+            return array();
+        }
+
+        $articulos = array();
+
+        foreach ($data_table as $fila) {
+            $articulo = array(
+                'ID_Articulo' => $fila["Id_Articulo"],
+                'articulo' => $fila["articulo"],  // Usar el alias definido en la consulta
+                'descripcion' => $fila["Descripcion"],
+                'precio' => $fila["Precio"],
+                'ID_Vendedor' => $fila["Id_Vendedor"],
+                'Fecha' => $fila["Fecha_Publicacion"],
+                'Vendedor' => $fila["vendedor"],  // Usar el alias definido en la consulta
+                'ruta_imagen' => $fila["ruta_imagen"],
+                'ruta_persona' => $fila["ruta_persona"]  // Usar el alias definido en la consulta
+            );
+            $articulos[] = $articulo;
+        }
+
+        return $articulos;
+    }
+
     public function buscarArticuloPorId($ID_Articulo)
     {
         $data_source = new DataSource();
@@ -59,6 +94,38 @@ class AlmuerzoEnMenuDAO
             'Fecha' => $fila["Fecha_Publicacion"],
         ];
     }
+
+    public function buscarArticuloPorIdHome($ID_Articulo)
+    {
+        $data_source = new DataSource();
+        $data_table = $data_source->ejecutarConsulta(
+            "SELECT a.Id_Articulo, a.Nombre AS articulo, a.Descripcion, a.Precio, a.Id_Vendedor, a.Fecha_Publicacion, 
+            p.Nombre AS vendedor, a.ruta_imagen, p.ruta_imagen AS ruta_persona 
+            FROM Articulo a
+            JOIN Persona p ON a.Id_Vendedor = p.Id_Persona
+            WHERE Id_Articulo = :ID_Articulo",
+            array(':ID_Articulo' => $ID_Articulo)
+        );
+
+        if (!$data_table || empty($data_table)) {
+            return null;
+        }
+
+        $fila = $data_table[0];
+
+        return [
+            'ID_Articulo' => $fila["Id_Articulo"],
+            'articulo' => $fila["articulo"],  // Usar el alias definido en la consulta
+            'descripcion' => $fila["Descripcion"],
+            'precio' => $fila["Precio"],
+            'ID_Vendedor' => $fila["Id_Vendedor"],
+            'Fecha' => $fila["Fecha_Publicacion"],
+            'Vendedor' => $fila["vendedor"],  // Usar el alias definido en la consulta
+            'ruta_imagen' => $fila["ruta_imagen"],
+            'ruta_persona' => $fila["ruta_persona"]
+        ];
+    }
+
 
 
 
@@ -108,7 +175,7 @@ class AlmuerzoEnMenuDAO
                 ':nombre' => $articulo->getNombre(),
                 ':descripcion' => $articulo->getDescripcion(),
                 ':precio' => $articulo->getPrecio(),
-                
+
             )
         );
         return $resultado;

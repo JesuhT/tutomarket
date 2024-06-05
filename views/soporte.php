@@ -83,7 +83,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
       <nav class="navbar">
          <a href="home.php"><i class="fas fa-home"></i><span>home</span></a>
-         <a href="courses.php"><i class="fa-solid fa-store"></i></i><span>Tienda</span></a>
+         <a href="shop.php"><i class="fa-solid fa-store"></i></i><span>Tienda</span></a>
          <a href="courses.php"><i class="fas fa-graduation-cap"></i><span>Monitorias</span></a>
          <a href="teachers.php"><i class="fas fa-chalkboard-user"></i><span>Monitores</span></a>
          <a href="dashboardadmin.php"><i class="fa-solid fa-user-tie"></i><span>Dashboard</span></a>
