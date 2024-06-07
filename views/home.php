@@ -96,7 +96,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
             <a href="myarticles.php"><i class="fas fa-newspaper"></i><span>Mis Artículos</span></a>
          <?php endif; ?>
 
-         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 4) : ?>
+         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] != 1) : ?>
             <a href="mygroups.php"><i class="fas fa-users"></i><span>Mis Grupos</span></a>
          <?php endif; ?>
 

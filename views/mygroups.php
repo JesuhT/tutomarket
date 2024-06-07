@@ -38,7 +38,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
          <a href="home.php" class="logo">TutoMarket</a>
 
-         <form action="search.php" method="post" class="search-form">
+         <form action="courses.php" method="post" class="search-form">
             <input type="text" name="search_box" required placeholder="Buscar..." maxlength="100">
             <button type="submit" class="fas fa-search"></button>
          </form>
@@ -97,7 +97,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
             <a href="myarticles.php"><i class="fas fa-newspaper"></i><span>Mis Artículos</span></a>
          <?php endif; ?>
 
-         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 4) : ?>
+         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] != 1) : ?>
             <a href="mygroups.php"><i class="fas fa-users"></i><span>Mis Grupos</span></a>
          <?php endif; ?>
 
@@ -118,9 +118,9 @@ if (!isset($_SESSION['ID_USUARIO'])) {
       <div class="box-container">
 
          <div class="box offer">
-            <h3>become a tutor</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, itaque ipsam fuga ex et aliquam.</p>
-            <a href="register.php" class="inline-btn">get started</a>
+            <h3>¿Quieres crear un nuevo grupo?</h3>
+            <p>Aqui podras crear tu grupo de monitorias de manera fácil</p>
+            <a href="register.php" class="inline-btn">Crear grupo</a>
          </div>
 
          <div class="box">

@@ -38,7 +38,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
          <a href="home.php" class="logo">TutoMarket</a>
 
-         <form action="search.php" method="post" class="search-form">
+         <form action="courses.php" method="post" class="search-form">
             <input type="text" name="search_box" required placeholder="Buscar..." maxlength="100">
             <button type="submit" class="fas fa-search"></button>
          </form>
@@ -96,7 +96,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
             <a href="myarticles.php"><i class="fas fa-newspaper"></i><span>Mis Artículos</span></a>
          <?php endif; ?>
 
-         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 4) : ?>
+         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] != 1) : ?>
             <a href="mygroups.php"><i class="fas fa-users"></i><span>Mis Grupos</span></a>
          <?php endif; ?>
 
@@ -115,15 +115,14 @@ if (!isset($_SESSION['ID_USUARIO'])) {
          <div class="info" style="justify-content: space-between;">
             <div class="part1" style="display: flex;">
                <p class="date"><i class="fas fa-calendar"></i><span>22-10-2022</span></p>
-               <p class="date"><i class="fas fa-heart" style="margin-left: 20px;"></i><span>44 integrantes</span></p>
+               <p class="date"><i class="fas fa-heart" style="margin-left: 20px;"></i><span>Integrantes</span></p>
             </div>
             <div class="part2" style="margin:0 20px;">
                <div class="tutor">
-                  <img src="images/pic-2.jpg" alt="">
+                  <img src="images/pic-(idmonitor).jpg" alt="">
                   <div>
-                     <h3><?php echo $_SESSION["NOMBRE"] . " ";
-                           echo $_SESSION["APELLIDO"]; ?></h3>
-                     <span><?php echo $_SESSION['NOMBRE_ROL'] . " "; ?></span>
+                     <h3>nombremonitor</h3>
+                     <span>rol</span>
                   </div>
                </div>
             </div>
@@ -159,9 +158,9 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
       <footer class="footer">
          <div class="comments">
-            <form action="" class="add-comment" style="display:flex;flex-direction: row; justify-content: center; align-items: center;">
+            <form action="" id="form-nuevo-anuncio" class="add-comment" style="display:flex;flex-direction: row; justify-content: center; align-items: center;">
                <h3>Nueva publicación</h3>
-               <textarea name="comment_box" placeholder="Escribe algo aquí" required maxlength="1000" cols="30" rows="10"></textarea>
+               <textarea name="comment_box" id="comment_box" placeholder="Escribe algo aquí" required maxlength="1000" cols="30" rows="10"></textarea>
                <input type="submit" value="add comment" class="inline-btn" name="add_comment" style="margin-left: 15px;">
             </form>
          </div>
@@ -169,7 +168,12 @@ if (!isset($_SESSION['ID_USUARIO'])) {
    <?php endif; ?>
    <!-- custom js file link  -->
    <script src="js/home.js"></script>
-
+   <script src="js/jquery-3.7.1.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+   <script src="js/sweetalert2.all.min.js"></script>
+   <script src="js/group-home.js"></script>
+   <script src="js/group-home-anuncios.js"></script>
+   <script src="js/agregar-anuncios.js"></script>
 </body>
 
 </html>

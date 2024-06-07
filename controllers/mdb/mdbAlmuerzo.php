@@ -1,17 +1,23 @@
 <?php
 require_once(__DIR__."/../../models/DAO/almuerzoDAO.php");
 
-function obtenerAlmuerzosPorDia($dia) {
-    $dao = new AlmuerzoDAO();
-    $almuerzos = $dao->obtenerAlmuerzosPorDia($dia);
-    return $almuerzos;
-}
-function obtenerAlmuerzosUsuario($usuario,$dia) {
-    $dao = new AlmuerzoDAO();
-    $tienealmuerzo = $dao->obtenerAlmuerzosUsuario($usuario,$dia);
-    return $tienealmuerzo;
-}
 
+
+function insertarEstudianteEnGrupo($idgrupo,$iduser) {
+    $dao = new AlmuerzoDAO();
+    $insertado = $dao->insertarEstudianteEnGrupo($idgrupo,$iduser);
+    return $insertado;
+}
+function agregarAnuncio($idMonitoria, $idMonitor, $descripcion) {
+    $dao = new AlmuerzoDAO();
+    $insertado = $dao->agregarAnuncio($idMonitoria, $idMonitor, $descripcion);
+    return $insertado;
+}
+function verificarEstudianteEnGrupo($idgrupo,$iduser) {
+    $dao = new AlmuerzoDAO();
+    $insertado = $dao->verificarEstudianteEnGrupo($idgrupo,$iduser);
+    return $insertado;
+}
 function leerGrupos() {
     $dao = new AlmuerzoDAO();
     $almuerzos = $dao->leerGrupos();
@@ -51,10 +57,8 @@ function borrarGrupo($id) {
     $resultado = $dao->borrarGrupo($id);
     return $resultado;
 }
-
-function insertarAlmuerzo($almuerzo) {
+function obtenerAnunciosPorIdGrupo($id) {
     $dao = new AlmuerzoDAO();
-    $resultado = $dao->insertarAlmuerzo($almuerzo);
+    $resultado = $dao->obtenerAnunciosPorIdGrupo($id);
     return $resultado;
 }
-?>

@@ -37,7 +37,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
          <a href="home.php" class="logo">TutoMarket</a>
 
-         <form action="search.php" method="post" class="search-form">
+         <form action="shop.php" method="post" class="search-form">
             <input type="text" name="search_box" required placeholder="Buscar..." maxlength="100">
             <button type="submit" class="fas fa-search"></button>
          </form>
@@ -96,7 +96,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
             <a href="myarticles.php"><i class="fas fa-newspaper"></i><span>Mis Artículos</span></a>
          <?php endif; ?>
 
-         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 4) : ?>
+         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] != 1) : ?>
             <a href="mygroups.php"><i class="fas fa-users"></i><span>Mis Grupos</span></a>
          <?php endif; ?>
 

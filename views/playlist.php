@@ -38,7 +38,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
          <a href="home.php" class="logo">TutoMarket</a>
 
-         <form action="search.php" method="post" class="search-form">
+         <form action="shop.php" method="post" class="search-form">
             <input type="text" name="search_box" required placeholder="Buscar..." maxlength="100">
             <button type="submit" class="fas fa-search"></button>
          </form>
@@ -97,7 +97,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
             <a href="myarticles.php"><i class="fas fa-newspaper"></i><span>Mis Artículos</span></a>
          <?php endif; ?>
 
-         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 4) : ?>
+         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] != 1) : ?>
             <a href="mygroups.php"><i class="fas fa-users"></i><span>Mis Grupos</span></a>
          <?php endif; ?>
 
@@ -110,36 +110,9 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
       <h1 class="heading">Detalles del grupo</h1>
 
-      <div class="row">
-
-         <div class="column">
-
-
-            <div class="thumb">
-               <img src="images/thumb-1.png" alt="">
-               <span>10 videos</span>
-            </div>
-         </div>
-         <div class="column">
-            <div class="tutor">
-               <img src="images/pic-2.jpg" alt="">
-               <div>
-                  <h3>(nombre del monitor)</h3>
-                  <span>(Fecha)</span>
-               </div>
-            </div>
-
-            <div class="details">
-               <h3>(nombre monitoria)</h3>
-               <p>(descripcion)</p>
-               <a href="teacher_profile.php" class="inline-btn">Ingresar</a>
-            </div>
-         </div>
-      </div>
-
    </section>
 
-  <!--  <section class="playlist-videos">
+   <!--  <section class="playlist-videos">
 
       <h1 class="heading">playlist videos</h1>
 
@@ -194,6 +167,84 @@ if (!isset($_SESSION['ID_USUARIO'])) {
    <script src="js/bootstrap.min.js"></script>
    <script src="js/sweetalert2.all.min.js"></script>
    <script src="js/playlist.js"></script>
+   <script>
+      $(document).ready(function() {
+
+         function getParametroURL(nombre) {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            return urlParams.get(nombre);
+         }
+
+         // Ejemplo de uso para obtener el valor de 'id' desde la URL
+         var idurl = getParametroURL('id');
+         console.log('ID de monitoria:', idurl);
+         // Obtener el Id_Monitoria desde la URL
+         var idMonitoria = idurl;
+
+         if (idMonitoria) {
+            console.log('ID de monitoria:', idMonitoria);
+            $.ajax({
+               url: '/../../controllers/action/verGrupoporIdPlay.php?Id_Monitoria=' + idMonitoria, // Nomb
+               success: function(result) {
+                  console.log(result);
+                  insertarGruposEnPagina(JSON.parse(result));
+               },
+               error: function(xhr) {
+                  alert("Ocurrió un error: " + xhr.status + " " + xhr.statusText);
+               }
+            });
+         } else {
+            $('#grupo-info').html('<p>No se proporcionó un ID de grupo válido.</p>');
+         }
+      });
+
+
+      function insertarGruposEnPagina(result) {
+         console.log(result);
+         console.log(result.ruta_imagen);
+         let contenedor = $('#grupo-info');
+         contenedor.empty(); // Limpiar el contenedor
+         gru(result);
+         // Iterar sobre cada grupo en el resultado
+         function gru(result) {
+            let box = `
+    <div class="row">
+        <div class="column">
+            <div class="thumb">
+                <img src="../${result.ruta_imagen}" alt="Imagen">
+                <span>${result.Fecha}</span>
+            </div>
+        </div>
+        <div class="column">
+            <div class="tutor">
+                <img src="../assets/img/people/pic-${result.Id_Monitor}.jpg" alt="">
+                <div>
+                    <h3>${result.Nombre_Monitor}</h3>
+                    <span>${result.Fecha}</span>
+                </div>
+            </div>
+            <div class="details" >
+                <h3>${result.Materia}</h3>
+                <p>${result.Descripcion}</p>
+                <div style="display: flex;">
+                
+                <form action="group-home.php" method="get" class="search-form">
+                    <input type="hidden" name="idUsuario" value="<?php echo $_SESSION['ID_USUARIO']; ?>">
+                    <input type="hidden" name="idGrupo" value="${result.Id_Monitoria}">
+                    <button type="submit" class="inline-btn">Ingresar</button>
+                </form>
+
+                
+                </div>
+            </div>
+        </div>
+    </div>
+    `;
+            contenedor.append(box); // Agregar el contenido al contenedor
+         };
+      }
+   </script>
 </body>
 
 </html>

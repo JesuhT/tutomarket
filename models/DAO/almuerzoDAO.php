@@ -5,47 +5,6 @@ require_once(__DIR__ . '/../../models/entities/Grupo_Monitoria.php');
 
 class AlmuerzoDAO
 {
-    function obtenerAlmuerzosPorDia($dia)
-    {
-        $data_source = new DataSource();
-        $data_table = $data_source->ejecutarConsulta(
-            "SELECT al.ID_almuerzo, al.nombre, al.descripcion, COALESCE(ROUND(AVG(ca.calificacion), 2), 0) AS promedioCalificacion 
-        FROM Almuerzo al
-        LEFT JOIN Calificacion ca ON al.ID_almuerzo = ca.ID_almuerzo
-        INNER JOIN Almuerzos_En_Menu am ON al.ID_almuerzo = am.ID_almuerzo 
-        INNER JOIN Menu me ON me.ID_menu = am.ID_menu 
-        INNER JOIN Dia_almuerzo d ON me.ID_dia = d.ID_dia 
-        WHERE d.nombre = :dia
-        GROUP BY al.ID_almuerzo, al.nombre, al.descripcion;",
-            array(':dia' => $dia)
-        );
-        $almuerzos = array();
-
-        foreach ($data_table as $indice => $valor) {
-            $almuerzoObj = new Almuerzo(
-                $data_table[$indice]["ID_almuerzo"],
-                $data_table[$indice]["nombre"],
-                $data_table[$indice]["descripcion"],
-                $data_table[$indice]["promedioCalificacion"]
-            );
-            array_push($almuerzos, $almuerzoObj);
-        }
-        $almuerzosArray = array();
-
-        foreach ($almuerzos as $almuerzo) {
-            $almuerzoArray = array(
-                'ID_almuerzo' => $almuerzo->getID_almuerzo(),
-                'nombre' => $almuerzo->getNombre(),
-                'descripcion' => $almuerzo->getDescripcion(),
-                'promedioCalificacion' => $almuerzo->getPromedioCalificacion()
-            );
-
-            $almuerzosArray[] = $almuerzoArray;
-        }
-        return $almuerzosArray;
-    }
-
-
     public function obtenerAlmuerzosUsuario($usuarioID, $dia)
     {
         $data_source = new DataSource();
@@ -60,6 +19,19 @@ class AlmuerzoDAO
         } else {
             return false; // El estudiante no tiene almuerzo para el día específico
         }
+    }
+    function obtenerAnunciosPorIdGrupo($idGrupo) {
+        $data_source = new DataSource();
+    
+        $anuncios = $data_source->ejecutarConsulta(
+            "SELECT a.Id_Anuncio, a.Descripcion, a.Fecha, a.Imagen, p.Nombre AS Nombre_Monitor, p.ruta_imagen AS Imagen_Monitor 
+            FROM Anuncio a
+            JOIN Persona p ON a.Id_Monitor = p.Id_Persona
+            WHERE a.Id_Monitoria = :idGrupo",
+            array(':idGrupo' => $idGrupo)
+        );
+    
+        return $anuncios;
     }
 
     function leerGrupos()
@@ -247,20 +219,52 @@ class AlmuerzoDAO
         return $resultado;
     }
 
-    public function insertarAlmuerzo(Almuerzo $Almuerzo)
-    {
+    function insertarEstudianteEnGrupo($idGrupo, $idEstudiante) {
         $data_source = new DataSource();
-        $sql = "INSERT INTO Almuerzo (ID_almuerzo, nombre, descripcion) VALUES (:ID_almuerzo, :nombre, :descripcion)";
-        $resultado = $data_source->ejecutarActualizacion(
-            $sql,
+        $fechaIngreso = date('Y-m-d'); // Fecha actual
+    
+        $result = $data_source->ejecutarActualizacion(
+            "INSERT INTO Estudiante_en_Grupo (Id_Grupo, Id_Estudiante, Fecha_Ingreso) VALUES (:idGrupo, :idEstudiante, :fechaIngreso)",
             array(
-                ':ID_almuerzo' => $Almuerzo->getID_almuerzo(),
-                ':nombre' => $Almuerzo->getNombre(),
-                ':descripcion' => $Almuerzo->getDescripcion(),
+                ':idGrupo' => $idGrupo,
+                ':idEstudiante' => $idEstudiante,
+                ':fechaIngreso' => $fechaIngreso
             )
         );
+    
+        return $result;
+    }
 
-
-        return $resultado;
+    function verificarEstudianteEnGrupo($idGrupo, $idUsuario) {
+        $data_source = new DataSource();
+    
+        // Consulta para verificar si el estudiante ya está en el grupo
+        $query = "SELECT COUNT(*) AS count FROM Estudiante_en_Grupo WHERE Id_Grupo = :idGrupo AND Id_Estudiante = :idUsuario";
+        $params = array(':idGrupo' => $idGrupo, ':idUsuario' => $idUsuario);
+        $result = $data_source->ejecutarConsulta($query, $params);
+    
+        if ($result && isset($result[0]['count']) && $result[0]['count'] > 0) {
+            return true; // El estudiante ya está en el grupo
+        } else {
+            return false; // El estudiante no está en el grupo
+        }
+    }
+    function agregarAnuncio($idMonitoria, $idMonitor, $descripcion) {
+        $data_source = new DataSource();
+    
+        // Insertar el nuevo anuncio en la base de datos
+        $query = "INSERT INTO Anuncio (Id_Monitoria, Id_Monitor, Descripcion, Fecha) VALUES (:idMonitoria, :idMonitor, :descripcion, CURDATE())";
+        $params = array(
+            ':idMonitoria' => $idMonitoria,
+            ':idMonitor' => $idMonitor, // Asumiendo que obtienes el ID del monitor de la sesión o algún otro método
+            ':descripcion' => $descripcion
+        );
+        $success = $data_source->ejecutarActualizacion($query, $params);
+    
+        if ($success) {
+            return true; // Inserción exitosa
+        } else {
+            return false; // Error al insertar
+        }
     }
 }
