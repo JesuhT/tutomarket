@@ -38,8 +38,8 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
          <a href="home.php" class="logo">TutoMarket</a>
 
-         <form action="search.php" method="post" class="search-form">
-            <input type="text" name="search_box" required placeholder="Buscar..." maxlength="100">
+         <form action="../controllers/action/verArticuloPorNombre.php" method="get" class="search-form">
+            <input type="text" name="search_box" required placeholder="Buscar..." maxlength="20">
             <button type="submit" class="fas fa-search"></button>
          </form>
 
@@ -108,7 +108,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
    <section class="courses">
 
-      <h1 class="heading">Grupos de Monitoria</h1>
+      <h1 class="heading">Articulos para la venta</h1>
 
       <div id="Grupos-box" class="box-container">
 
@@ -125,7 +125,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                <span>10 videos</span>
             </div>
             <h3 class="title">complete HTML tutorial</h3>
-            <a href="playlist.php" class="inline-btn">view playlist</a>
+            <a href="playlist.php" class="inline-btn">Ver producto</a>
          </div>
 
          <div class="box">
@@ -141,7 +141,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                <span>10 videos</span>
             </div>
             <h3 class="title">complete CSS tutorial</h3>
-            <a href="playlist.php" class="inline-btn">view playlist</a>
+            <a href="playlist.php" class="inline-btn">Ver producto</a>
          </div>
 
          <div class="box">
@@ -157,7 +157,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                <span>10 videos</span>
             </div>
             <h3 class="title">complete JS tutorial</h3>
-            <a href="playlist.php" class="inline-btn">view playlist</a>
+            <a href="playlist.php" class="inline-btn">Ver producto</a>
          </div>
 
          <div class="box">
@@ -173,7 +173,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                <span>10 videos</span>
             </div>
             <h3 class="title">complete Boostrap tutorial</h3>
-            <a href="playlist.php" class="inline-btn">view playlist</a>
+            <a href="playlist.php" class="inline-btn">Ver producto</a>
          </div>
 
          <div class="box">
@@ -189,7 +189,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                <span>10 videos</span>
             </div>
             <h3 class="title">complete JQuery tutorial</h3>
-            <a href="playlist.php" class="inline-btn">view playlist</a>
+            <a href="playlist.php" class="inline-btn">Ver producto</a>
          </div>
 
          <div class="box">
@@ -205,7 +205,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                <span>10 videos</span>
             </div>
             <h3 class="title">complete SASS tutorial</h3>
-            <a href="playlist.php" class="inline-btn">view playlist</a>
+            <a href="playlist.php" class="inline-btn">Ver producto</a>
          </div>
 
          <div class="box">
@@ -221,7 +221,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                <span>10 videos</span>
             </div>
             <h3 class="title">complete PHP tutorial</h3>
-            <a href="playlist.php" class="inline-btn">view playlist</a>
+            <a href="playlist.php" class="inline-btn">Ver producto</a>
          </div>
 
          <div class="box">
@@ -237,7 +237,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                <span>10 videos</span>
             </div>
             <h3 class="title">complete MySQL tutorial</h3>
-            <a href="playlist.php" class="inline-btn">view playlist</a>
+            <a href="playlist.php" class="inline-btn">Ver producto</a>
          </div>
 
          <div class="box">
@@ -253,7 +253,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
                <span>10 videos</span>
             </div>
             <h3 class="title">complete react tutorial</h3>
-            <a href="playlist.php" class="inline-btn">view playlist</a>
+            <a href="playlist.php" class="inline-btn">Ver producto</a>
          </div>
 
       </div>

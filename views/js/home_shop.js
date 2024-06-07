@@ -1,5 +1,18 @@
 $(document).ready(function () {
-    ajaxVerGrupos();
+    function getParametroURL(nombre) {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        return urlParams.get(nombre);
+    }
+    var nameurl = getParametroURL('nombre');
+    console.log('Nombew peoducto:', nameurl);
+
+    
+    if (nameurl) {
+        ajaxBuscarArticulo(nameurl);
+    } else {
+        ajaxVerGrupos();
+    }
 });
 
 function ajaxVerGrupos() {
@@ -15,6 +28,10 @@ function ajaxVerGrupos() {
     });
 }
 
+function ajaxBuscarArticulo(nameurl) {
+    
+}
+
 function insertarArticulosEnPagina(result) {
     console.log(result);
     let contenedor = $('#Grupos-box');
@@ -22,7 +39,6 @@ function insertarArticulosEnPagina(result) {
 
     $.each(result, function (i, articulo) {
         let box = `
-        
         <div class="box">
             <div class="tutor">
                 <img src="../assets/img/people/pic-${articulo.ID_Articulo}.jpg" alt="">

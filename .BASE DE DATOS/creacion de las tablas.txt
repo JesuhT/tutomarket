@@ -1,166 +1,124 @@
--- Creación de las tablas
 CREATE TABLE Rol (
-    ID_rol INT AUTO_INCREMENT PRIMARY KEY,
-    Nombre VARCHAR(50) UNIQUE NOT NULL
-);
-
-CREATE TABLE Almuerzo (
-    ID_almuerzo INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255) NOT NULL,
-    descripcion VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE Calificacion (
-    ID_calificacion INT AUTO_INCREMENT PRIMARY KEY,
-    ID_estudiante INT NOT NULL,
-    ID_almuerzo INT NOT NULL,
-    calificacion INT NOT NULL,
-    descripcion VARCHAR(255),
-    fecha_calificacion DATE NOT NULL
-);
-
-CREATE TABLE Fila_Virtual (
-    ID_fila INT AUTO_INCREMENT PRIMARY KEY,
-    fecha_realizacion DATE NOT NULL,
-    num_personas INT NOT NULL
-);
-
-CREATE TABLE Usuario (
-    ID_user INT AUTO_INCREMENT PRIMARY KEY,
-    Nombre VARCHAR(32) NOT NULL,
-    Apellido VARCHAR(32) NOT NULL,
-    Email VARCHAR(32) UNIQUE NOT NULL,
-    Contrasena VARCHAR(32) NOT NULL,
-    Celular VARCHAR(20) UNIQUE NOT NULL,
-    ID_programa INT,
-    ID_rol INT DEFAULT 1 NOT NULL
-);
-
-CREATE TABLE Dia_almuerzo (
-    ID_dia INT PRIMARY KEY,
-    nombre VARCHAR(32) UNIQUE NOT NULL
-);
-
-CREATE TABLE Facultad (
-    ID_facultad INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(200) UNIQUE NOT NULL
-);
-
-CREATE TABLE Dias_Almuerzos_Estudiante (
-    ID_dia INT NOT NULL,
-    ID_estudiante INT NOT NULL
-);
-
-CREATE TABLE Menu (
-    ID_menu INT AUTO_INCREMENT PRIMARY KEY,
-    ID_dia INT NOT NULL
-);
-
-CREATE TABLE Programa (
-    ID_programa INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(32) UNIQUE NOT NULL,
-    ID_facultad INT NOT NULL
-);
-
-CREATE TABLE Donacion (
-    ID_donacion INT AUTO_INCREMENT PRIMARY KEY,
-    ID_donante INT NOT NULL,
-    ID_beneficiario INT NOT NULL,
-    fecha DATE NOT NULL,
-    hora TIME NOT NULL,
-    ID_estado INT NOT NULL
+    Id_Rol BIGINT PRIMARY KEY AUTO_INCREMENT,
+    Nombre VARCHAR(132)
 );
 
 CREATE TABLE Estado (
-    ID_estado INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(32) NOT NULL
+    Id_Estado BIGINT PRIMARY KEY AUTO_INCREMENT,
+    Nombre VARCHAR(132)
 );
 
-CREATE TABLE Estado_Donacion (
-    ID_donacion INT NOT NULL,
-    ID_estado INT NOT NULL
+CREATE TABLE Facultad (
+    Id_Facultad BIGINT PRIMARY KEY AUTO_INCREMENT,
+    Nombre VARCHAR(132)
 );
 
-CREATE TABLE Modificaciones_Menu (
-    ID_administrador INT NOT NULL,
-    ID_menu INT NOT NULL,
-    fecha DATE NOT NULL,
-    hora TIME NOT NULL
+CREATE TABLE Programa (
+    Id_Programa BIGINT PRIMARY KEY AUTO_INCREMENT,
+    Nombre VARCHAR(132),
+    Id_Facultad BIGINT,
+    FOREIGN KEY (Id_Facultad) REFERENCES Facultad(Id_Facultad) ON DELETE CASCADE
 );
 
-CREATE TABLE Almuerzos_En_Menu (
-    ID_menu INT NOT NULL,
-    ID_almuerzo INT NOT NULL
+CREATE TABLE Persona (
+    Id_Persona BIGINT PRIMARY KEY AUTO_INCREMENT,
+    Nombre VARCHAR(132),
+    Apellido VARCHAR(132),
+    Correo_Institucional VARCHAR(164),
+    Codigo_Estudiantil BIGINT,
+    Celular BIGINT,
+    Id_Rol BIGINT,
+    Id_Programa BIGINT,
+    Id_Estado BIGINT DEFAULT 1,
+    Biografia text,
+		ruta_imagen VARCHAR(255),
+    FOREIGN KEY (Id_Rol) REFERENCES Rol(Id_Rol) ON DELETE CASCADE,
+    FOREIGN KEY (Id_Programa) REFERENCES Programa(Id_Programa) ON DELETE CASCADE,
+    FOREIGN KEY (Id_Estado) REFERENCES Estado(Id_Estado) ON DELETE CASCADE
 );
 
-CREATE TABLE Estudiantes_En_Fila (
-    ID_estudiante INT NOT NULL,
-    ID_fila INT NOT NULL,
-    turno INT NOT NULL,
-    hora_ingreso TIME NOT NULL
+CREATE TABLE Articulo (
+    Id_Articulo BIGINT PRIMARY KEY AUTO_INCREMENT,
+    Id_Vendedor BIGINT,
+    Nombre VARCHAR(132),
+    Descripcion TEXT,
+    Precio BIGINT,
+    Fecha_Publicacion DATE,
+		ruta_imagen VARCHAR(255),
+    FOREIGN KEY (Id_Vendedor) REFERENCES Persona(Id_Persona) ON DELETE CASCADE
 );
 
-CREATE TABLE DonacionPendiente (
-  ID_donacionPendiente INT AUTO_INCREMENT PRIMARY KEY,
-  fecha date NOT NULL,
-  ID_donante INT NOT NULL
+CREATE TABLE Grupo_Monitoria (
+    Id_Monitoria BIGINT PRIMARY KEY AUTO_INCREMENT,
+    Id_Monitor BIGINT,
+    Materia VARCHAR(132),
+    Fecha DATE,
+		Descripcion Text,
+    FOREIGN KEY (Id_Monitor) REFERENCES Persona(Id_Persona) ON DELETE CASCADE
+);
+CREATE TABLE Ruta_Grupo (
+    Id_Ruta BIGINT AUTO_INCREMENT PRIMARY KEY,
+    Id_Grupo BIGINT,
+    ruta_imagen VARCHAR(255),
+    FOREIGN KEY (Id_Grupo) REFERENCES Grupo_Monitoria(Id_Monitoria) ON DELETE CASCADE
 );
 
--- agregar restricciones de clave foránea
-ALTER TABLE Calificacion
-ADD CONSTRAINT Calificacion_fk0 FOREIGN KEY (ID_estudiante) REFERENCES Usuario(ID_user) ON DELETE CASCADE,
-ADD CONSTRAINT Calificacion_fk1 FOREIGN KEY (ID_almuerzo) REFERENCES Almuerzo(ID_almuerzo) ON DELETE CASCADE;
+CREATE TABLE Usuario (
+    Id_Usuario BIGINT PRIMARY KEY AUTO_INCREMENT,
+    Usuario VARCHAR(132),
+    Password VARCHAR(132),
+    FOREIGN KEY (Id_Usuario) REFERENCES Persona(Id_Persona) ON DELETE CASCADE
+);
 
-ALTER TABLE Menu
-ADD CONSTRAINT Menu_fk0 FOREIGN KEY (ID_menu) REFERENCES Dia_almuerzo(ID_dia) ON DELETE CASCADE;
+CREATE TABLE Advertencia (
+    Id_Advertencia BIGINT PRIMARY KEY AUTO_INCREMENT,
+    Id_Estudiante BIGINT,
+    Id_Administrador BIGINT,
+    Fecha DATE,
+    Descripcion TEXT,
+    FOREIGN KEY (Id_Estudiante) REFERENCES Persona(Id_Persona) ON DELETE CASCADE,
+    FOREIGN KEY (Id_Administrador) REFERENCES Persona(Id_Persona) ON DELETE CASCADE
+);
 
-ALTER TABLE Dias_Almuerzos_Estudiante
-ADD CONSTRAINT Dias_Almuerzos_Estudiantes_fk0 FOREIGN KEY (ID_dia) REFERENCES Dia_almuerzo(ID_dia) ON DELETE CASCADE,
-ADD CONSTRAINT Dias_Almuerzos_Estudiantes_fk1 FOREIGN KEY (ID_estudiante) REFERENCES Usuario(ID_user) ON DELETE CASCADE;
+CREATE TABLE Estudiante_en_Grupo (
+    Id_Grupo BIGINT,
+    Id_Estudiante BIGINT,
+    Fecha_Ingreso DATE,
+    PRIMARY KEY (Id_Grupo, Id_Estudiante),
+    FOREIGN KEY (Id_Grupo) REFERENCES Grupo_Monitoria(Id_Monitoria) ON DELETE CASCADE,
+    FOREIGN KEY (Id_Estudiante) REFERENCES Persona(Id_Persona) ON DELETE CASCADE
+);
 
-ALTER TABLE Programa
-ADD CONSTRAINT Programa_fk0 FOREIGN KEY (ID_facultad) REFERENCES Facultad(ID_facultad) ON DELETE CASCADE;
+CREATE TABLE Calificación_Monitoria (
+    Id_Calificacion BIGINT PRIMARY KEY AUTO_INCREMENT,
+    Id_Monitoria BIGINT,
+    Id_Estudiante BIGINT,
+    Calificacion DECIMAL(3, 1),
+    Descripcion TEXT,
+    Fecha_Calificacion DATE,
+    FOREIGN KEY (Id_Monitoria) REFERENCES Grupo_Monitoria(Id_Monitoria) ON DELETE CASCADE,
+    FOREIGN KEY (Id_Estudiante) REFERENCES Persona(Id_Persona) ON DELETE CASCADE
+);
 
-ALTER TABLE Donacion
-ADD CONSTRAINT Donación_fk0 FOREIGN KEY (ID_donante) REFERENCES Usuario(ID_user) ON DELETE CASCADE,
-ADD CONSTRAINT Donación_fk1 FOREIGN KEY (ID_beneficiario) REFERENCES Usuario(ID_user) ON DELETE CASCADE,
-ADD CONSTRAINT Donación_fk2 FOREIGN KEY (ID_estado) REFERENCES Estado(ID_estado) ON DELETE CASCADE;
+CREATE TABLE Calificación_Articulo (
+    Id_Calificacion BIGINT PRIMARY KEY AUTO_INCREMENT,
+    Id_Articulo BIGINT,
+    Id_Estudiante BIGINT,
+    Calificacion DECIMAL(3, 1),
+    Descripcion TEXT,
+    Fecha_Calificacion DATE,
+    FOREIGN KEY (Id_Articulo) REFERENCES Articulo(Id_Articulo) ON DELETE CASCADE,
+    FOREIGN KEY (Id_Estudiante) REFERENCES Persona(Id_Persona) ON DELETE CASCADE
+);
 
-ALTER TABLE Estado_Donacion
-ADD CONSTRAINT Estado_Donacion_fk0 FOREIGN KEY (ID_donacion) REFERENCES Donacion(ID_donacion) ON DELETE CASCADE,
-ADD CONSTRAINT Estado_Donacion_fk1 FOREIGN KEY (ID_estado) REFERENCES Estado(ID_estado) ON DELETE CASCADE;
+CREATE TABLE Anuncio (
+    Id_Anuncio BIGINT PRIMARY KEY AUTO_INCREMENT,
+    Id_Monitoria BIGINT,
+    Id_Monitor BIGINT,
+    Descripcion TEXT,
+    Imagen BLOB NULL,
+    FOREIGN KEY (Id_Monitoria) REFERENCES Grupo_Monitoria(Id_Monitoria) ON DELETE CASCADE,
+    FOREIGN KEY (Id_Monitor) REFERENCES Persona(Id_Persona) ON DELETE CASCADE
+);
 
-ALTER TABLE Modificaciones_Menu
-ADD CONSTRAINT Modificaciones_Menu_fk0 FOREIGN KEY (ID_administrador) REFERENCES Usuario(ID_user) ON DELETE CASCADE,
-ADD CONSTRAINT Modificaciones_Menu_fk1 FOREIGN KEY (ID_menu) REFERENCES Menu(ID_menu) ON DELETE CASCADE;
-
-ALTER TABLE Almuerzos_En_Menu
-ADD CONSTRAINT Almuerzos_En_Menu_fk0 FOREIGN KEY (ID_menu) REFERENCES Menu(ID_menu) ON DELETE CASCADE,
-ADD CONSTRAINT Almuerzos_En_Menu_fk1 FOREIGN KEY (ID_almuerzo) REFERENCES Almuerzo(ID_almuerzo) ON DELETE CASCADE;
-
-ALTER TABLE Estudiantes_En_Fila
-ADD CONSTRAINT Estudiantes_En_Fila_fk0 FOREIGN KEY (ID_estudiante) REFERENCES Usuario(ID_user) ON DELETE CASCADE,
-ADD CONSTRAINT Estudiantes_En_Fila_fk1 FOREIGN KEY (ID_fila) REFERENCES Fila_Virtual(ID_fila);
-
-ALTER TABLE Usuario
-ADD CONSTRAINT Usuario_fk0 FOREIGN KEY (ID_programa) REFERENCES Programa(ID_programa) ON DELETE CASCADE,
-ADD CONSTRAINT Usuario_fk1 FOREIGN KEY (ID_rol) REFERENCES Rol(ID_rol) ON DELETE CASCADE;
-
-ALTER TABLE DonacionPendiente
-ADD CONSTRAINT DonacionPendiente_fk0 FOREIGN KEY (ID_donante) REFERENCES Usuario (ID_user) ON DELETE CASCADE;
-
-
-CREATE TABLE `token` (
-  `ID_user` int(11) NOT NULL,
-  `reset_token_hash` varchar(64) DEFAULT NULL,
-  `reset_token_expires_at` datetime DEFAULT NULL
-) ;
-
-ALTER TABLE `token`
-  ADD PRIMARY KEY (`ID_user`),
-  ADD UNIQUE KEY `reset_token_hash` (`reset_token_hash`);
-
-
-ALTER TABLE `token`
-  ADD CONSTRAINT `Token_fk0` FOREIGN KEY (`ID_user`) REFERENCES `usuario` (`ID_user`);
-COMMIT;
+ 

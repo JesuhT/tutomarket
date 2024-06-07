@@ -57,10 +57,12 @@ function insertarGruposEnPagina(result) {
                         <span>${result.Fecha}</span>
                     </div>
                 </div>
-                <div class="details">
+                <div class="details" >
                     <h3>${result.Materia}</h3>
                     <p>${result.Descripcion}</p>
+                    <div style="display: flex;">
                     <a href="teacher_profile.php" class="inline-btn">Ingresar</a>
+                    </div>
                 </div>
             </div>
         </div>
