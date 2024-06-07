@@ -267,4 +267,24 @@ class AlmuerzoDAO
             return false; // Error al insertar
         }
     }
+    function creargrupo($idUsuario, $materia, $descripcion ){
+        $data_source = new DataSource();
+        $fecha = date('Y-m-d');
+    $query = "INSERT INTO Grupo_Monitoria (Id_Monitor, Materia, Fecha, Descripcion) 
+              VALUES (:idUsuario, :materia, :fechaInicio, :descripcion)";
+    $params = array(
+        ':idUsuario' => $idUsuario,
+        ':materia' => $materia,
+        ':fechaInicio' => $fecha,
+        ':descripcion' => $descripcion
+    );
+
+    $success = $data_source->ejecutarActualizacion($query, $params);
+    if ($success) {
+        return true; // Inserción exitosa
+    } else {
+        return false; // Error al insertar
+    }
+    }
+
 }

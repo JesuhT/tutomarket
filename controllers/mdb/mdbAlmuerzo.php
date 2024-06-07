@@ -62,3 +62,9 @@ function obtenerAnunciosPorIdGrupo($id) {
     $resultado = $dao->obtenerAnunciosPorIdGrupo($id);
     return $resultado;
 }
+function creargrupo($idUsuario, $materia, $descripcion) {
+    $dao = new AlmuerzoDAO();
+    $resultado = $dao->creargrupo($idUsuario, $materia, $descripcion);
+    return $resultado;
+}
+

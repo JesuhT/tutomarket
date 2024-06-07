@@ -20,7 +20,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>video playlist</title>
+   <title>teachers</title>
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
@@ -38,8 +38,8 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
          <a href="home.php" class="logo">TutoMarket</a>
 
-         <form action="shop.php" method="get" class="search-form">
-            <input type="text" name="idArticulo" placeholder="Buscar..." maxlength="50">
+         <form action="courses.php" method="post" class="search-form">
+            <input type="text" name="search_box" required placeholder="Buscar..." maxlength="100">
             <button type="submit" class="fas fa-search"></button>
          </form>
 
@@ -109,84 +109,58 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
    </div>
 
-   <section id="grupo-info" class="playlist-details">
+   <section class="teachers">
 
-      <h1 class="heading">Detalles del grupo</h1>
+      <h1 class="heading">expert teachers</h1>
 
-      <div class="row">
+      <form action="" method="post" class="search-tutor">
+         <input type="text" name="search_box" placeholder="search tutors..." required maxlength="100">
+         <button type="submit" class="fas fa-search" name="search_tutor"></button>
+      </form>
 
-         <div class="column">
+      <div id="content-a" class="box-container">
 
-
-            <div class="thumb">
-               <img src="images/thumb-1.png" alt="">
-               <span>10 videos</span>
-            </div>
+         <div class="box offer card">
+            <h3>¿Quieres crear un nuevo grupo?</h3>
+            <p>Aqui podras crear tu grupo de monitorias de manera fácil</p>
+            <a href="#" id="linkCrearGrupo" class="inline-btn">Crear grupo</a>
          </div>
-         <div class="column">
+         <div class="box card">
             <div class="tutor">
-               <img src="images/pic-2.jpg" alt="">
+               <img src="images/pic-5.jpg" alt="">
                <div>
-                  <h3>(nombre del monitor)</h3>
-                  <span>(Fecha)</span>
+                  <h3>john deo</h3>
+                  <span>developer</span>
                </div>
             </div>
-
-            <div class="details">
-               <h3>(nombre monitoria)</h3>
-               <p>(descripcion)</p>
-               <a href="teacher_profile.php" class="inline-btn">Ingresar</a>
-            </div>
+            <p>total playlists : <span>4</span></p>
+            <p>total videos : <span>18</span></p>
+            <p>total likes : <span>1208</span></p>
+            <a href="teacher_profile.php" class="inline-btn">view profile</a>
          </div>
       </div>
 
    </section>
+   <section class="form-container">
+      <form id="formCrearGrupo" class="hide" action="/../../controllers/action/crearGrupo.php" method="post">
+         <h3>Crear Grupo</h3>
 
-   <section class="playlist-videos">
+         <!-- Aquí puedes incluir cualquier campo adicional necesario para crear el grupo -->
+         <input type="hidden" name="idUsuario" value="<?php echo $_SESSION['ID_USUARIO']; ?>" class="box" readonly>
 
-      <h1 class="heading">playlist videos</h1>
+         <p>Materia</p>
+         <input type="text" name="materia" placeholder="Materia del Grupo" maxlength="132" class="box" required>
 
-      <div class="box-container">
+         <p>Descripción</p>
+         <textarea name="descripcion" placeholder="Descripción del Grupo" class="box" required></textarea>
 
-         <a class="box" href="group-home.php">
-            <i class="fas fa-play"></i>
-            <img src="images/post-1-1.png" alt="">
-            <h3>complete HTML tutorial (part 01)</h3>
-         </a>
+         <p>Imagen del Grupo</p>
+         <input type="file" name="imagenGrupo" accept="image/*" class="box">
 
-         <a class="box" href="group-home.php">
-            <i class="fas fa-play"></i>
-            <img src="images/post-1-2.png" alt="">
-            <h3>complete HTML tutorial (part 02)</h3>
-         </a>
-
-         <a class="box" href="group-home.php">
-            <i class="fas fa-play"></i>
-            <img src="images/post-1-3.png" alt="">
-            <h3>complete HTML tutorial (part 03)</h3>
-         </a>
-
-         <a class="box" href="group-home.php">
-            <i class="fas fa-play"></i>
-            <img src="images/post-1-4.png" alt="">
-            <h3>complete HTML tutorial (part 04)</h3>
-         </a>
-
-         <a class="box" href="group-home.php">
-            <i class="fas fa-play"></i>
-            <img src="images/post-1-5.png" alt="">
-            <h3>complete HTML tutorial (part 05)</h3>
-         </a>
-
-         <a class="box" href="group-home.php">
-            <i class="fas fa-play"></i>
-            <img src="images/post-1-6.png" alt="">
-            <h3>complete HTML tutorial (part 06)</h3>
-         </a>
-
-      </div>
-
+         <input type="submit" value="Crear Grupo" name="submit" class="btn">
+      </form>
    </section>
+
 
 
 
@@ -196,7 +170,10 @@ if (!isset($_SESSION['ID_USUARIO'])) {
    <script src="js/jquery-3.7.1.min.js"></script>
    <script src="js/bootstrap.min.js"></script>
    <script src="js/sweetalert2.all.min.js"></script>
-   <script src="js/playlist_articulo.js"></script>
+   <script src="js/mygroups.js"></script>
+
+
+
 </body>
 
 </html>

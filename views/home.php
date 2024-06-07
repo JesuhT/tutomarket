@@ -97,7 +97,10 @@ if (!isset($_SESSION['ID_USUARIO'])) {
          <?php endif; ?>
 
          <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] != 1) : ?>
-            <a href="mygroups.php"><i class="fas fa-users"></i><span>Mis Grupos</span></a>
+            <a href="mygroups_estudiante.php"><i class="fas fa-users"></i><span>Mis Grupos</span></a>
+         <?php endif; ?>
+         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 4) : ?>
+            <a href="mygroups.php"><i class="fas fa-users"></i><span>Administrar Grupos</span></a>
          <?php endif; ?>
 
          <a href="contact.php"><i class="fas fa-headset"></i><span>Contactanos</span></a>
@@ -272,6 +275,8 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
    <!-- custom js file link  -->
    <script src="js/jquery-3.7.1.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+   <script src="js/sweetalert2.all.min.js"></script>
    <script src="js/home.js"></script>
    <script src="js/home_grupos.js"></script>
 

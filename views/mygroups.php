@@ -98,7 +98,10 @@ if (!isset($_SESSION['ID_USUARIO'])) {
          <?php endif; ?>
 
          <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] != 1) : ?>
-            <a href="mygroups.php"><i class="fas fa-users"></i><span>Mis Grupos</span></a>
+            <a href="mygroups_estudiante.php"><i class="fas fa-users"></i><span>Mis Grupos</span></a>
+         <?php endif; ?>
+         <?php if (isset($_SESSION['ID_ROL']) && $_SESSION['ID_ROL'] == 4) : ?>
+            <a href="mygroups.php"><i class="fas fa-users"></i><span>Administrar Grupos</span></a>
          <?php endif; ?>
 
          <a href="contact.php"><i class="fas fa-headset"></i><span>Contactanos</span></a>
@@ -108,64 +111,21 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
    <section class="teachers">
 
-      <h1 class="heading">expert teachers</h1>
+      <h1 class="heading">Grupos a los que haces parte</h1>
 
       <form action="" method="post" class="search-tutor">
          <input type="text" name="search_box" placeholder="search tutors..." required maxlength="100">
          <button type="submit" class="fas fa-search" name="search_tutor"></button>
       </form>
 
-      <div class="box-container">
+      <div id="content-a" class="box-container">
 
-         <div class="box offer">
+         <div class="box offer card">
             <h3>¿Quieres crear un nuevo grupo?</h3>
             <p>Aqui podras crear tu grupo de monitorias de manera fácil</p>
-            <a href="register.php" class="inline-btn">Crear grupo</a>
+            <a href="#" id="linkCrearGrupo" class="inline-btn">Crear grupo</a>
          </div>
-
-         <div class="box">
-            <div class="tutor">
-               <img src="images/pic-2.jpg" alt="">
-               <div>
-                  <h3>john deo</h3>
-                  <span>developer</span>
-               </div>
-            </div>
-            <p>total playlists : <span>4</span></p>
-            <p>total videos : <span>18</span></p>
-            <p>total likes : <span>1208</span></p>
-            <a href="teacher_profile.php" class="inline-btn">view profile</a>
-         </div>
-
-         <div class="box">
-            <div class="tutor">
-               <img src="images/pic-3.jpg" alt="">
-               <div>
-                  <h3>john deo</h3>
-                  <span>developer</span>
-               </div>
-            </div>
-            <p>total playlists : <span>4</span></p>
-            <p>total videos : <span>18</span></p>
-            <p>total likes : <span>1208</span></p>
-            <a href="teacher_profile.php" class="inline-btn">view profile</a>
-         </div>
-
-         <div class="box">
-            <div class="tutor">
-               <img src="images/pic-4.jpg" alt="">
-               <div>
-                  <h3>john deo</h3>
-                  <span>developer</span>
-               </div>
-            </div>
-            <p>total playlists : <span>4</span></p>
-            <p>total videos : <span>18</span></p>
-            <p>total likes : <span>1208</span></p>
-            <a href="teacher_profile.php" class="inline-btn">view profile</a>
-         </div>
-
-         <div class="box">
+         <div class="box card">
             <div class="tutor">
                <img src="images/pic-5.jpg" alt="">
                <div>
@@ -178,58 +138,40 @@ if (!isset($_SESSION['ID_USUARIO'])) {
             <p>total likes : <span>1208</span></p>
             <a href="teacher_profile.php" class="inline-btn">view profile</a>
          </div>
-
-         <div class="box">
-            <div class="tutor">
-               <img src="images/pic-6.jpg" alt="">
-               <div>
-                  <h3>john deo</h3>
-                  <span>developer</span>
-               </div>
-            </div>
-            <p>total playlists : <span>4</span></p>
-            <p>total videos : <span>18</span></p>
-            <p>total likes : <span>1208</span></p>
-            <a href="teacher_profile.php" class="inline-btn">view profile</a>
-         </div>
-
-         <div class="box">
-            <div class="tutor">
-               <img src="images/pic-7.jpg" alt="">
-               <div>
-                  <h3>john deo</h3>
-                  <span>developer</span>
-               </div>
-            </div>
-            <p>total playlists : <span>4</span></p>
-            <p>total videos : <span>18</span></p>
-            <p>total likes : <span>1208</span></p>
-            <a href="teacher_profile.php" class="inline-btn">view profile</a>
-         </div>
-
-         <div class="box">
-            <div class="tutor">
-               <img src="images/pic-8.jpg" alt="">
-               <div>
-                  <h3>john deo</h3>
-                  <span>developer</span>
-               </div>
-            </div>
-            <p>total playlists : <span>4</span></p>
-            <p>total videos : <span>18</span></p>
-            <p>total likes : <span>1208</span></p>
-            <a href="teacher_profile.php" class="inline-btn">view profile</a>
-         </div>
-
       </div>
 
    </section>
+   <section class="form-container">
+      <form id="formCrearGrupo" class="hide" action="/../../controllers/action/crearGrupo.php" method="post">
+         <h3>Crear Grupo</h3>
+
+         <!-- Aquí puedes incluir cualquier campo adicional necesario para crear el grupo -->
+         <input type="hidden" name="idUsuario" value="<?php echo $_SESSION['ID_USUARIO']; ?>" class="box" readonly>
+
+         <p>Materia</p>
+         <input type="text" name="materia" placeholder="Materia del Grupo" maxlength="132" class="box" required>
+
+         <p>Descripción</p>
+         <textarea name="descripcion" placeholder="Descripción del Grupo" class="box" required></textarea>
+
+         <p>Imagen del Grupo</p>
+         <input type="file" name="imagenGrupo" accept="image/*" class="box">
+
+         <input type="submit" value="Crear Grupo" name="submit" class="btn">
+      </form>
+   </section>
+
 
 
 
 
    <!-- custom js file link  -->
    <script src="js/home.js"></script>
+   <script src="js/jquery-3.7.1.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+   <script src="js/sweetalert2.all.min.js"></script>
+   <script src="js/mygroups.js"></script>
+
 
 
 </body>

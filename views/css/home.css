@@ -297,6 +297,10 @@ section{
    white-space: nowrap;
 }
 
+.hide{
+   display: none;
+}
+
 .side-bar .profile .role{
    font-size: 1.8rem;
    color: var(--light-color);
