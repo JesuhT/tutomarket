@@ -15,7 +15,7 @@ $(document).ready(function () {
                 $("#formLogin input[name='email']").val(usuario.Correo_Institucional);
                 $("#formLogin input[name='codigo']").val(usuario.Codigo_Estudiantil);
                 $("#formLogin input[name='celular']").val(usuario.Celular);
-                $("#formLogin input[name='biografia']").val(usuario.Biografia);
+                $("#formLogin textarea[name='biografia']").val(usuario.Biografia);
 
                 // Seleccionar el programa del usuario en el select correspondiente
                 var programaSelect = $("#formLogin select[name='programa']");
@@ -65,18 +65,18 @@ $(document).ready(function () {
             processData: false,
             success: function (response) {
                 console.log(response);
-                var result = JSON.parse(response);
-
+                var response = JSON.parse(response);
                 // Muestra el mensaje de éxito
                 Swal.fire({
-                    icon: result.estado ? 'success' : 'error',
-                    title: result.msg,
+                    icon: response.estado ? 'success' : 'error',
+                    title: response.msg,
                     showConfirmButton: false,
                     timer: 1500
                 }).then(function () {
-                    if (!result.estado) {
+                    if (!response.estado) {
 
                     } else {
+                        
                         location.reload();
                     }
 

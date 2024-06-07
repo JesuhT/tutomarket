@@ -23,6 +23,12 @@ function leerGruposHome() {
     return $almuerzos;
 }
 
+function buscarGrupo($name) {
+    $dao = new AlmuerzoDAO();
+    $almuerzos = $dao->buscarMonitoriasPorMateria($name);
+    return $almuerzos;
+}
+
 
 function modificarGrupo($grupo) {
     $dao = new AlmuerzoDAO();

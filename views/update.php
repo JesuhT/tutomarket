@@ -128,7 +128,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
          <input type="number" name="celular" placeholder="Phone" class="box" required>
 
          <p>Biography</p>
-         <input type="text" name="biografia" placeholder="Biography" class="box">
+         <textarea type="text" name="biografia" placeholder="Biography" class="box"></textarea>
 
          <p>Program</p>
          <select style="font-size: 18px; height: max-content;" class="form-control programaSelect box" name="programa" required>

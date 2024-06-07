@@ -129,6 +129,39 @@ class AlmuerzoDAO
         return $grupos;
     }
 
+    public function buscarMonitoriasPorMateria($materia) {
+        $data_source = new DataSource();
+        $materia = '%' . $materia . '%'; // Para buscar coincidencias parciales
+        $data_table = $data_source->ejecutarConsulta(
+            "SELECT gm.Id_Monitoria, gm.Materia, gm.Fecha, gm.Descripcion, gm.Id_Monitor,
+                    p.Nombre AS Nombre_Monitor, rg.ruta_imagen
+             FROM Grupo_Monitoria gm
+             JOIN Persona p ON gm.Id_Monitor = p.Id_Persona
+             LEFT JOIN Ruta_Grupo rg ON gm.Id_Monitoria = rg.Id_Grupo
+             WHERE LOWER(CONVERT(gm.Materia USING utf8)) LIKE LOWER(CONVERT(:materia USING utf8))",
+            array(':materia' => $materia)
+        );
+    
+        if (!$data_table || empty($data_table)) {
+            return [];
+        }
+    
+        $monitorias = [];
+        foreach ($data_table as $fila) {
+            $monitorias[] = [
+                'Id_Monitoria' => $fila["Id_Monitoria"],
+                'Materia' => $fila["Materia"],
+                'Fecha' => $fila["Fecha"],
+                'Descripcion' => $fila["Descripcion"],
+                'Id_Monitor' => $fila["Id_Monitor"],
+                'Nombre_Monitor' => $fila["Nombre_Monitor"],
+                'ruta_imagen' => $fila["ruta_imagen"]
+            ];
+        }
+    
+        return $monitorias;
+    }
+    
 
 
     public function modificarGrupo(Grupo_Monitoria $grupo)

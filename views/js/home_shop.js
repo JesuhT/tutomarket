@@ -4,15 +4,33 @@ $(document).ready(function () {
         const urlParams = new URLSearchParams(queryString);
         return urlParams.get(nombre);
     }
-    var nameurl = getParametroURL('nombre');
-    console.log('Nombew peoducto:', nameurl);
-
-    
-    if (nameurl) {
+    var nameurl = getParametroURL('idArticulo');
+    console.log('Nombre producto:', nameurl);
+    if(nameurl){
         ajaxBuscarArticulo(nameurl);
     } else {
         ajaxVerGrupos();
     }
+    
+    function ajaxBuscarArticulo(nameurl) {
+        $.ajax({
+            url: "/../../controllers/action/verArticuloPorNombre.php?idArticulo=" + nameurl,
+            success: function (response) {
+                if (response) {
+                    insertarArticulosEnPagina(JSON.parse(response));
+                } else {
+                    let box =
+                    
+                    `<div class="box"><p>No se proporcionó un ID de grupo válido.</p></div>`;
+                    contenedor.append(box);
+                }
+            },
+            error: function (err) {
+                console.error('Error:', err);
+            }
+        });
+    }
+    
 });
 
 function ajaxVerGrupos() {
@@ -27,13 +45,8 @@ function ajaxVerGrupos() {
         }
     });
 }
-
-function ajaxBuscarArticulo(nameurl) {
-    
-}
-
 function insertarArticulosEnPagina(result) {
-    console.log(result);
+    console.log("hola"+result);
     let contenedor = $('#Grupos-box');
     contenedor.empty(); // Limpiar el contenedor
 
@@ -52,9 +65,12 @@ function insertarArticulosEnPagina(result) {
                 <span>${articulo.articulo}</span>
             </div>
             <h3 class="title">${articulo.articulo}</h3>
-            <a href="playlist_articulo.php?id=${articulo.ID_Articulo}" class="inline-btn">view playlist</a>
+            <a href="playlist_articulo.php?id=${articulo.ID_Articulo}" class="inline-btn">Ver articulo</a>
         </div>
         `;
         contenedor.append(box);
     });
 }
+
+
+

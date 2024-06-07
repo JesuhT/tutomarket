@@ -23,7 +23,7 @@ $old_pass = $_POST['old_pass'];
 $new_pass = $_POST['new_pass'];
 $c_pass = $_POST['c_pass'];
 
-$ruta_imagen = '';
+$ruta_imagen = '../assets/img/people/pic-2.jpg';
 
 if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
     $fileTmpPath = $_FILES['image']['tmp_name'];
@@ -62,12 +62,15 @@ $msg = "Los cambios han sido registrados correctamente";
 $resultado = ['estado' => $estado, 'msg' => $msg];
 
 // Maneja la actualización de la contraseña si se proporciona
-if ($new_pass && $old_pass && $new_pass === $c_pass) {
-    if (!actualizarContrasena($idUsuario, $new_pass)) {
-        echo json_encode(['estado' => false, 'msg' => "Error al actualizar la contraseña"]);
-    } else {
-        echo json_encode(['estado' => false, 'msg' => "Tus contraseñas no cohinciden"]);
-    }
+if ($new_pass && $c_pass && $new_pass === $c_pass) {
+    if (actualizarContrasena($idUsuario, $new_pass)) {
+        $estad = true;
+        $msge = "Se actualizó la contraseña";
+        $result = ['estado' => $estad, 'msg' => $msge];
+        echo json_encode($result);
+        usleep(7000);
+        exit;
+    } 
 }
 
 

@@ -37,8 +37,8 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
          <a href="home.php" class="logo">TutoMarket</a>
 
-         <form action="search.php" method="post" class="search-form">
-            <input type="text" name="search_box" required placeholder="Buscar..." maxlength="100">
+         <form action="shop.php" method="get" class="search-form">
+            <input type="text" name="idArticulo" placeholder="Buscar..." maxlength="50">
             <button type="submit" class="fas fa-search"></button>
          </form>
 

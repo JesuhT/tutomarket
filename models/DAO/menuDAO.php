@@ -126,6 +126,44 @@ class AlmuerzoEnMenuDAO
         ];
     }
 
+    public function buscarArticulosPorNombre($nombres)
+{
+    $data_source = new DataSource();
+    $nombre = '%' . $nombres . '%'; // Para buscar coincidencias parciales
+
+    $data_table = $data_source->ejecutarConsulta(
+        "SELECT a.Id_Articulo, a.Nombre AS articulo, a.Descripcion, a.Precio, a.Id_Vendedor, a.Fecha_Publicacion, 
+            p.Nombre AS vendedor, a.ruta_imagen, p.ruta_imagen AS ruta_persona 
+        FROM Articulo a
+        JOIN Persona p ON a.Id_Vendedor = p.Id_Persona
+        WHERE LOWER(CONVERT(a.Nombre USING utf8)) LIKE LOWER(CONVERT(:nombre USING utf8))",
+        array(':nombre' => $nombre)
+    );
+
+    if (!$data_table || empty($data_table)) {
+        return [];
+    }
+
+    $articulos = [];
+
+    foreach ($data_table as $fila) {
+        $articulos[] = [
+            'ID_Articulo' => $fila["Id_Articulo"],
+            'articulo' => $fila["articulo"],
+            'descripcion' => $fila["Descripcion"],
+            'precio' => $fila["Precio"],
+            'ID_Vendedor' => $fila["Id_Vendedor"],
+            'Fecha' => $fila["Fecha_Publicacion"],
+            'Vendedor' => $fila["vendedor"],
+            'ruta_imagen' => $fila["ruta_imagen"],
+            'ruta_persona' => $fila["ruta_persona"]
+        ];
+    }
+
+    return $articulos;
+}
+
+
 
 
 

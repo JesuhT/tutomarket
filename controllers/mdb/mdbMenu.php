@@ -17,11 +17,18 @@ function modificarArticulo($almuerzo) {
     $resultado = $dao->modificarArticulo($almuerzo);
     return $resultado;
 }
+function buscarArticulosPorNombre($idarticulo) {
+    $dao = new AlmuerzoEnMenuDAO();
+    $resultado = $dao->buscarArticulosPorNombre($idarticulo);
+    return $resultado;
+}
+
 function buscarArticuloPorIdHome($idarticulo) {
     $dao = new AlmuerzoEnMenuDAO();
     $resultado = $dao->buscarArticuloPorIdHome($idarticulo);
     return $resultado;
 }
+
 
 function buscarArticuloPorId($idarticulo) {
     $dao = new AlmuerzoEnMenuDAO();

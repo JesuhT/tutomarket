@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 require_once (__DIR__.'/../mdb/mdbMenu.php');
 
 $idArticulo = $_GET['idArticulo'];
-$articulo = buscarArticuloPorIdHome($idArticulo);
+$articulo = buscarArticulosPorNombre($idArticulo);
 
 echo json_encode($articulo);
 
