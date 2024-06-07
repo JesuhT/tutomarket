@@ -32,7 +32,7 @@ $(document).ready(function() {
                             text: res.message
                         }).then((result) => {
                             // Redirigir o realizar otras acciones después del éxito
-                            window.location.href = 'mygroups.php'; // Redirigir a la página de grupos
+                            window.location.reload(); // Redirigir a la página de grupos
                         });
                     } else {
                         // Mostrar alerta de error con SweetAlert2

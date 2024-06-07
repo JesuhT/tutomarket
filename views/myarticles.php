@@ -38,7 +38,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
          <a href="home.php" class="logo">TutoMarket</a>
 
-         <form action="courses.php" method="post" class="search-form">
+         <form action="courses.php" method="get" class="search-form">
             <input type="text" name="search_box" required placeholder="Buscar..." maxlength="100">
             <button type="submit" class="fas fa-search"></button>
          </form>
@@ -111,7 +111,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
    <section class="teachers">
 
-      <h1 class="heading">expert teachers</h1>
+      <h1 class="heading">Mis articulos</h1>
 
       <form action="" method="post" class="search-tutor">
          <input type="text" name="search_box" placeholder="search tutors..." required maxlength="100">
@@ -121,9 +121,9 @@ if (!isset($_SESSION['ID_USUARIO'])) {
       <div id="content-a" class="box-container">
 
          <div class="box offer card">
-            <h3>¿Quieres crear un nuevo grupo?</h3>
-            <p>Aqui podras crear tu grupo de monitorias de manera fácil</p>
-            <a href="#" id="linkCrearGrupo" class="inline-btn">Crear grupo</a>
+            <h3>¿Quieres crear un nuevo articulo?</h3>
+            <p>Aqui podras crear un articulo de manera fácil</p>
+            <a href="#" id="linkCrearGrupo" class="inline-btn">Crear articulo</a>
          </div>
          <div class="box card">
             <div class="tutor">

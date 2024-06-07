@@ -68,3 +68,21 @@ function creargrupo($idUsuario, $materia, $descripcion) {
     return $resultado;
 }
 
+function buscarGruposPorMonitor($idUsuario) {
+    $dao = new AlmuerzoDAO();
+    $resultado = $dao->buscarGruposPorMonitor($idUsuario);
+    return $resultado;
+}
+function leerGruposMonitor($id) {
+    $dao = new AlmuerzoDAO();
+    $almuerzos = $dao->leerGruposMonitor($id);
+    return $almuerzos;
+}
+
+function leerGruposEstudiante($id) {
+    $dao = new AlmuerzoDAO();
+    $almuerzos = $dao->leerGruposEstudiante($id);
+    return $almuerzos;
+}
+
+

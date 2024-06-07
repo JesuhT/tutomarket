@@ -20,9 +20,10 @@ class AlmuerzoDAO
             return false; // El estudiante no tiene almuerzo para el día específico
         }
     }
-    function obtenerAnunciosPorIdGrupo($idGrupo) {
+    function obtenerAnunciosPorIdGrupo($idGrupo)
+    {
         $data_source = new DataSource();
-    
+
         $anuncios = $data_source->ejecutarConsulta(
             "SELECT a.Id_Anuncio, a.Descripcion, a.Fecha, a.Imagen, p.Nombre AS Nombre_Monitor, p.ruta_imagen AS Imagen_Monitor 
             FROM Anuncio a
@@ -30,7 +31,7 @@ class AlmuerzoDAO
             WHERE a.Id_Monitoria = :idGrupo",
             array(':idGrupo' => $idGrupo)
         );
-    
+
         return $anuncios;
     }
 
@@ -101,7 +102,73 @@ class AlmuerzoDAO
         return $grupos;
     }
 
-    public function buscarMonitoriasPorMateria($materia) {
+    function leerGruposMonitor($idM)
+    {
+        $data_source = new DataSource();
+        $data_table = $data_source->ejecutarConsulta( "SELECT gm.Id_Monitoria, gm.Id_Monitor, gm.Materia, gm.Fecha, gm.Descripcion, rg.ruta_imagen, p.Nombre
+        FROM Grupo_Monitoria gm
+        LEFT JOIN Ruta_Grupo rg ON gm.Id_Monitoria = rg.Id_Grupo
+        JOIN Persona p ON gm.Id_Monitor = p.Id_Persona
+        WHERE gm.Id_Monitor=:id",
+        $data= array(':id' => $idM)) ;
+
+
+        if (!$data_table) {
+            return array();
+        }
+
+        $grupos = array();
+
+        foreach ($data_table as $fila) {
+            $grupo = array(
+                'Id_Monitoria' => $fila["Id_Monitoria"],
+                'Id_Monitor' => $fila["Id_Monitor"],
+                'Materia' => $fila["Materia"],
+                'Fecha' => $fila["Fecha"],
+                'ruta_imagen' => $fila["ruta_imagen"],
+                'Nombre_Monitor' => $fila["Nombre"],
+                'Descripcion'=> $fila['Descripcion'],
+            );
+            $grupos[] = $grupo;
+        }
+
+        return $grupos;
+    }
+    function leerGruposEstudiante($idM)
+    {
+        $data_source = new DataSource();
+        $data_table = $data_source->ejecutarConsulta( "SELECT gm.Id_Monitoria, gm.Id_Monitor, gm.Materia, gm.Fecha, gm.Descripcion, rg.ruta_imagen, p.Nombre
+        FROM Estudiante_en_Grupo e
+        JOIN Grupo_Monitoria gm ON gm.Id_Monitoria = e.Id_Grupo
+        LEFT JOIN Ruta_Grupo rg ON gm.Id_Monitoria = rg.Id_Grupo
+        JOIN Persona p ON e.Id_Estudiante = p.Id_Persona
+        WHERE e.Id_Estudiante =:id",
+        $data= array(':id' => $idM)) ;
+
+
+        if (!$data_table) {
+            return array();
+        }
+
+        $grupos = array();
+
+        foreach ($data_table as $fila) {
+            $grupo = array(
+                'Id_Monitoria' => $fila["Id_Monitoria"],
+                'Id_Monitor' => $fila["Id_Monitor"],
+                'Materia' => $fila["Materia"],
+                'Fecha' => $fila["Fecha"],
+                'ruta_imagen' => $fila["ruta_imagen"],
+                'Nombre_Monitor' => $fila["Nombre"],
+                'Descripcion'=> $fila['Descripcion'],
+            );
+            $grupos[] = $grupo;
+        }
+
+        return $grupos;
+    }
+    public function buscarMonitoriasPorMateria($materia)
+    {
         $data_source = new DataSource();
         $materia = '%' . $materia . '%'; // Para buscar coincidencias parciales
         $data_table = $data_source->ejecutarConsulta(
@@ -113,11 +180,11 @@ class AlmuerzoDAO
              WHERE LOWER(CONVERT(gm.Materia USING utf8)) LIKE LOWER(CONVERT(:materia USING utf8))",
             array(':materia' => $materia)
         );
-    
+
         if (!$data_table || empty($data_table)) {
             return [];
         }
-    
+
         $monitorias = [];
         foreach ($data_table as $fila) {
             $monitorias[] = [
@@ -130,10 +197,10 @@ class AlmuerzoDAO
                 'ruta_imagen' => $fila["ruta_imagen"]
             ];
         }
-    
+
         return $monitorias;
     }
-    
+
 
 
     public function modificarGrupo(Grupo_Monitoria $grupo)
@@ -219,10 +286,11 @@ class AlmuerzoDAO
         return $resultado;
     }
 
-    function insertarEstudianteEnGrupo($idGrupo, $idEstudiante) {
+    function insertarEstudianteEnGrupo($idGrupo, $idEstudiante)
+    {
         $data_source = new DataSource();
         $fechaIngreso = date('Y-m-d'); // Fecha actual
-    
+
         $result = $data_source->ejecutarActualizacion(
             "INSERT INTO Estudiante_en_Grupo (Id_Grupo, Id_Estudiante, Fecha_Ingreso) VALUES (:idGrupo, :idEstudiante, :fechaIngreso)",
             array(
@@ -231,27 +299,29 @@ class AlmuerzoDAO
                 ':fechaIngreso' => $fechaIngreso
             )
         );
-    
+
         return $result;
     }
 
-    function verificarEstudianteEnGrupo($idGrupo, $idUsuario) {
+    function verificarEstudianteEnGrupo($idGrupo, $idUsuario)
+    {
         $data_source = new DataSource();
-    
+
         // Consulta para verificar si el estudiante ya está en el grupo
         $query = "SELECT COUNT(*) AS count FROM Estudiante_en_Grupo WHERE Id_Grupo = :idGrupo AND Id_Estudiante = :idUsuario";
         $params = array(':idGrupo' => $idGrupo, ':idUsuario' => $idUsuario);
         $result = $data_source->ejecutarConsulta($query, $params);
-    
+
         if ($result && isset($result[0]['count']) && $result[0]['count'] > 0) {
             return true; // El estudiante ya está en el grupo
         } else {
             return false; // El estudiante no está en el grupo
         }
     }
-    function agregarAnuncio($idMonitoria, $idMonitor, $descripcion) {
+    function agregarAnuncio($idMonitoria, $idMonitor, $descripcion)
+    {
         $data_source = new DataSource();
-    
+
         // Insertar el nuevo anuncio en la base de datos
         $query = "INSERT INTO Anuncio (Id_Monitoria, Id_Monitor, Descripcion, Fecha) VALUES (:idMonitoria, :idMonitor, :descripcion, CURDATE())";
         $params = array(
@@ -260,31 +330,63 @@ class AlmuerzoDAO
             ':descripcion' => $descripcion
         );
         $success = $data_source->ejecutarActualizacion($query, $params);
-    
+
         if ($success) {
             return true; // Inserción exitosa
         } else {
             return false; // Error al insertar
         }
     }
-    function creargrupo($idUsuario, $materia, $descripcion ){
+    function creargrupo($idUsuario, $materia, $descripcion)
+    {
         $data_source = new DataSource();
         $fecha = date('Y-m-d');
-    $query = "INSERT INTO Grupo_Monitoria (Id_Monitor, Materia, Fecha, Descripcion) 
+        $query = "INSERT INTO Grupo_Monitoria (Id_Monitor, Materia, Fecha, Descripcion) 
               VALUES (:idUsuario, :materia, :fechaInicio, :descripcion)";
-    $params = array(
-        ':idUsuario' => $idUsuario,
-        ':materia' => $materia,
-        ':fechaInicio' => $fecha,
-        ':descripcion' => $descripcion
-    );
+        $params = array(
+            ':idUsuario' => $idUsuario,
+            ':materia' => $materia,
+            ':fechaInicio' => $fecha,
+            ':descripcion' => $descripcion
+        );
 
-    $success = $data_source->ejecutarActualizacion($query, $params);
-    if ($success) {
-        return true; // Inserción exitosa
-    } else {
-        return false; // Error al insertar
+        $success = $data_source->ejecutarActualizacion($query, $params);
+        if ($success) {
+            return true; // Inserción exitosa
+        } else {
+            return false; // Error al insertar
+        }
     }
-    }
+    public function buscarGruposPorMonitor($idMonitor)
+    {
+        $data_source = new DataSource();
+        $data_table = $data_source->ejecutarConsulta(
+            "SELECT gm.Id_Monitoria, gm.Id_Monitor, gm.Materia, gm.Fecha, gm.Descripcion, r.ruta_imagen, p.Nombre AS Nombre_Monitor
+        FROM Grupo_Monitoria gm
+        JOIN Persona p ON gm.Id_Monitor = p.Id_Persona
+        JOIN Ruta_Grupo r ON gm.Id_Monitoria = r.Id_Grupo
+        WHERE gm.Id_Monitor = :Id_Monitor",
+            array(':Id_Monitor' => $idMonitor)
+        );
 
+        if (!$data_table) {
+            return null;
+        }
+
+        $grupos = [];
+
+        foreach ($data_table as $fila) {
+            $grupos[] = [
+                'Id_Monitoria' => $fila["Id_Monitoria"],
+                'Id_Monitor' => $fila["Id_Monitor"],
+                'Materia' => $fila["Materia"],
+                'Fecha' => $fila["Fecha"],
+                'Descripcion' => $fila["Descripcion"],
+                'Nombre_Monitor' => $fila["Nombre_Monitor"],
+                'ruta_imagen' => $fila["ruta_imagen"],
+            ];
+        }
+
+        return $grupos;
+    }
 }

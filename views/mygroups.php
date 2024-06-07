@@ -38,7 +38,7 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 
          <a href="home.php" class="logo">TutoMarket</a>
 
-         <form action="courses.php" method="post" class="search-form">
+         <form action="courses.php" method="get" class="search-form">
             <input type="text" name="search_box" required placeholder="Buscar..." maxlength="100">
             <button type="submit" class="fas fa-search"></button>
          </form>
@@ -125,19 +125,6 @@ if (!isset($_SESSION['ID_USUARIO'])) {
             <p>Aqui podras crear tu grupo de monitorias de manera fácil</p>
             <a href="#" id="linkCrearGrupo" class="inline-btn">Crear grupo</a>
          </div>
-         <div class="box card">
-            <div class="tutor">
-               <img src="images/pic-5.jpg" alt="">
-               <div>
-                  <h3>john deo</h3>
-                  <span>developer</span>
-               </div>
-            </div>
-            <p>total playlists : <span>4</span></p>
-            <p>total videos : <span>18</span></p>
-            <p>total likes : <span>1208</span></p>
-            <a href="teacher_profile.php" class="inline-btn">view profile</a>
-         </div>
       </div>
 
    </section>
@@ -171,6 +158,59 @@ if (!isset($_SESSION['ID_USUARIO'])) {
    <script src="js/bootstrap.min.js"></script>
    <script src="js/sweetalert2.all.min.js"></script>
    <script src="js/mygroups.js"></script>
+   <script>
+      $(document).ready(function() {
+         // Obtener el ID del usuario monitor desde la URL
+
+
+         var idUsuario = <?php echo $_SESSION['ID_USUARIO'];?>;
+         console.log(idUsuario);
+         if (idUsuario) {
+            // Solicitar grupos en los que el usuario es monitor
+            $.ajax({
+               url: '/../../controllers/action/verGruposPorMonitor.php?idUsuario='+idUsuario,
+               method: 'GET',
+               success: function(response) {
+                  const res = JSON.parse(response);
+                  if (res.status === 'success') {
+                     console.log(res.data);
+                     insertarGruposEnPagina(res.data);
+                  } else {
+                     console.error('Error:', res.message);
+                  }
+               },
+               error: function(xhr) {
+                  console.error('Ocurrió un error:', xhr.status, xhr.statusText);
+               }
+            });
+         } else {
+            console.error('ID de usuario no proporcionado.');
+         }
+
+         function insertarGruposEnPagina(result) {
+            let contenedor = $('#content-a');
+
+            // Iterar sobre cada grupo en el resultado
+            $.each(result, function(index, grupo) {
+               let box = `
+                <div class="box card">
+                    <div class="tutor">
+                        <img src="../${grupo.ruta_imagen}" alt="">
+                        <div>
+                            <h3>${grupo.Nombre_Monitor}</h3>
+                            <span>${grupo.Materia}</span>
+                        </div>
+                    </div>
+                    <p>Fecha: <span>${grupo.Fecha}</span></p>
+                    <p>Descripción: <span>${grupo.Descripcion}</span></p>
+                    <a href="group-home.php?idGrupo=${grupo.Id_Monitoria}&idUsuario=${idUsuario}" class="inline-btn">Ingresar</a>
+                </div>
+            `;
+               contenedor.append(box);
+            });
+         }
+      });
+   </script>
 
 
 
